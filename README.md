@@ -1,160 +1,144 @@
-# Fullstack Starter Template
+# Towbotics
 
-A production-ready fullstack application starter with:
-- **Frontend**: React + Vite + Tailwind CSS → Deployed on Vercel
-- **Backend**: Express + PostgreSQL → Deployed on Railway
-- **Beautiful Landing Page** ready to customize
+A modern, aesthetic landing page showcasing Towbotics with integrated payment processing.
 
-## 🚀 Quick Deploy (5 minutes)
+---
+
+## 🚀 Tech Stack
+
+### Frontend
+- **React 18** + **Vite** - Modern, fast development
+- **Tailwind CSS** - Beautiful, responsive design
+- **Hosted on Vercel** - Global CDN, automatic deployments
+
+### Backend
+- **Express** - RESTful API server
+- **Node.js 18+** - Runtime environment
+- **Hosted on Railway** - Reliable backend hosting
+
+### Payment Processing
+- **Stripe** - Secure payment integration
+- Checkout sessions
+- Webhook handling
+
+---
+
+## 🌐 Live URLs
+
+- **Frontend**: https://towbotics.vercel.app (coming soon)
+- **Backend API**: https://towbotics.up.railway.app (coming soon)
+
+---
+
+## 🎨 Features
+
+- ✨ **Aesthetic Landing Page** - Modern, eye-catching design
+- 💳 **Stripe Payments** - Secure payment processing
+- 📱 **Fully Responsive** - Perfect on all devices
+- ⚡ **Lightning Fast** - Optimized performance
+- 🔒 **Secure** - HTTPS, CORS configured
+
+---
+
+## 🛠️ Development
 
 ### Prerequisites
 - Node.js 18+
-- Git
-- GitHub account
-- Vercel account (free)
-- Railway account (free)
+- npm or yarn
+- Stripe account
 
-### Deploy Steps
+### Local Setup
 
-1. **Create New Project from This Template**
-   ```bash
-   # Run the automated setup script
-   ./setup-new-project.sh my-awesome-project
-   ```
+```bash
+# Clone the repository
+git clone https://github.com/aidendevins/Towbotics.git
+cd Towbotics
 
-2. **Push to GitHub**
-   ```bash
-   cd my-awesome-project
-   git remote add origin https://github.com/yourusername/my-awesome-project.git
-   git push -u origin main
-   ```
+# Install backend dependencies
+cd backend
+npm install
+cp env.example .env
+# Add your environment variables to .env
+npm run dev
 
-3. **Deploy Frontend (Vercel)**
-   - Go to https://vercel.com/new
-   - Import your GitHub repo
-   - Root Directory: `frontend`
-   - Click "Deploy"
-   - Done! ✅
+# Install frontend dependencies (in new terminal)
+cd frontend
+npm install
+cp env.example .env.local
+# Add your environment variables to .env.local
+npm run dev
+```
 
-4. **Deploy Backend (Railway)**
-   - Go to https://railway.app/new
-   - Click "Deploy from GitHub repo"
-   - Select your repo
-   - Root Directory: `backend`
-   - Add PostgreSQL database (click "+ New")
-   - Click "Deploy"
-   - Done! ✅
+### Environment Variables
 
-5. **Connect Frontend to Backend**
-   - In Vercel, add environment variable:
-     - `VITE_API_URL` = Your Railway backend URL
-   - Redeploy frontend
-   - Done! ✅
+**Backend (.env)**
+```env
+PORT=8000
+NODE_ENV=development
+FRONTEND_URL=http://localhost:5173
+STRIPE_SECRET_KEY=your_stripe_secret_key
+STRIPE_WEBHOOK_SECRET=your_webhook_secret
+```
+
+**Frontend (.env.local)**
+```env
+VITE_API_URL=http://localhost:8000/api
+VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
+```
+
+---
+
+## 🚀 Deployment
+
+### Frontend (Vercel)
+1. Push code to GitHub
+2. Import repo to Vercel
+3. Set root directory: `frontend`
+4. Add environment variables
+5. Deploy!
+
+### Backend (Railway)
+1. Push code to GitHub
+2. Import repo to Railway
+3. Set root directory: `backend`
+4. Add environment variables
+5. Deploy!
 
 ---
 
 ## 📁 Project Structure
 
 ```
-my-awesome-project/
-├── backend/
-│   ├── server.js          # Express server
-│   ├── routes/
-│   │   └── api.js         # API routes
-│   ├── package.json
-│   └── railway.toml       # Railway config
-├── frontend/
+towbotics/
+├── backend/              # Express API
+│   ├── routes/          # API endpoints
+│   ├── server.js        # Main server file
+│   └── package.json
+├── frontend/            # React application
 │   ├── src/
-│   │   ├── main.jsx       # Entry point
-│   │   ├── App.jsx        # Landing page
-│   │   └── index.css      # Tailwind styles
-│   ├── package.json
-│   ├── vite.config.js
-│   └── vercel.json        # Vercel config
-├── setup-new-project.sh   # Automated setup script
+│   │   ├── App.jsx     # Main landing page
+│   │   └── main.jsx    # Entry point
+│   └── package.json
 └── README.md
 ```
 
 ---
 
-## 🎨 Customize Your Landing Page
+## 🎯 Roadmap
 
-Edit `frontend/src/App.jsx` to customize:
-- Hero section
-- Features
-- Call-to-action
-- Colors and branding
-
----
-
-## 🔧 Local Development
-
-```bash
-# Backend (runs on http://localhost:8000)
-cd backend
-npm install
-npm run dev
-
-# Frontend (runs on http://localhost:5173)
-cd frontend
-npm install
-npm run dev
-```
+- [x] Project setup
+- [ ] Design landing page
+- [ ] Stripe integration
+- [ ] Deploy to production
+- [ ] Custom domain
+- [ ] Analytics
 
 ---
 
-## 🌍 Environment Variables
+## 📄 License
 
-### Backend (.env)
-```env
-PORT=8000
-NODE_ENV=development
-DATABASE_URL=postgresql://localhost:5432/mydb
-```
-
-### Frontend (.env.local)
-```env
-VITE_API_URL=http://localhost:8000/api
-```
+Private - All rights reserved
 
 ---
 
-## 📚 Reference
-
-This template is based on the architecture from:
-`/Users/aiden/Documents/GitHub/knockout-merch/COMPLETE_TECHNICAL_DOCUMENTATION.md`
-
-Refer to that document for:
-- Authentication setup
-- Database migrations
-- Payment integration
-- AI services
-- Advanced features
-
----
-
-## 🎯 Next Steps
-
-1. ✅ Deploy (done with this template)
-2. Add authentication (reference: Section 11 of docs)
-3. Add database models (reference: Section 6 of docs)
-4. Build your features
-5. Scale and iterate
-
----
-
-## 📦 Reusable Template
-
-Keep this template as your starter for future projects!
-
-To start a new project:
-```bash
-./setup-new-project.sh new-project-name
-cd new-project-name
-# Customize and deploy
-```
-
----
-
-**Created**: January 2026
-**Based on**: DesignForWear (knockout-merch) architecture
+**Built with ❤️ for Towbotics**
