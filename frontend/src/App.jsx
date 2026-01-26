@@ -22,7 +22,7 @@ function App() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-cyan-900">
       {/* Hero Section */}
       <div className="container mx-auto px-4 py-16 sm:py-24">
         <div className="text-center">
@@ -34,26 +34,26 @@ function App() {
 
           {/* Main Heading */}
           <h1 className="text-5xl sm:text-7xl font-black text-white mb-6 tracking-tight">
-            Your Awesome
+            Welcome to
             <br />
-            <span className="bg-gradient-to-r from-pink-400 to-purple-400 bg-clip-text text-transparent">
-              Project Name
+            <span className="bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              Towbotics
             </span>
           </h1>
 
           {/* Subheading */}
           <p className="text-xl sm:text-2xl text-white/80 mb-12 max-w-2xl mx-auto">
-            Built with React, Express, and deployed on Vercel + Railway.
-            Ready to customize and scale.
+            Advanced robotics solutions for modern towing operations.
+            Innovation meets reliability.
           </p>
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <button className="px-8 py-4 bg-white text-purple-900 font-bold rounded-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl">
-              Get Started
+            <button className="px-8 py-4 bg-white text-blue-900 font-bold rounded-lg hover:bg-gray-100 transition-all transform hover:scale-105 shadow-xl">
+              Request Demo
             </button>
             <button className="px-8 py-4 bg-white/10 backdrop-blur-sm text-white font-bold rounded-lg hover:bg-white/20 transition-all border border-white/20">
-              Learn More
+              Contact Us
             </button>
           </div>
         </div>
@@ -61,19 +61,19 @@ function App() {
         {/* Feature Cards */}
         <div className="grid md:grid-cols-3 gap-8 mt-24">
           <FeatureCard
-            icon="⚡"
-            title="Lightning Fast"
-            description="Built with Vite for instant hot reload and optimized builds"
+            icon="🤖"
+            title="Autonomous Systems"
+            description="Advanced robotics technology for efficient and safe towing operations"
           />
           <FeatureCard
-            icon="🎨"
-            title="Beautiful Design"
-            description="Tailwind CSS for rapid, responsive, and modern UI development"
+            icon="🔧"
+            title="Smart Integration"
+            description="Seamlessly integrates with your existing fleet management systems"
           />
           <FeatureCard
-            icon="🚀"
-            title="Deploy Ready"
-            description="Pre-configured for Vercel (frontend) and Railway (backend)"
+            icon="🛡️"
+            title="Safety First"
+            description="Built-in safety protocols and real-time monitoring for peace of mind"
           />
         </div>
 
@@ -118,10 +118,10 @@ function App() {
       <footer className="border-t border-white/10 py-8">
         <div className="container mx-auto px-4 text-center">
           <p className="text-white/50 text-sm">
-            Built with ❤️ using the Fullstack Starter Template
+            © 2026 Towbotics. All rights reserved.
           </p>
           <p className="text-white/30 text-xs mt-2">
-            Reference: knockout-merch/COMPLETE_TECHNICAL_DOCUMENTATION.md
+            Revolutionizing the towing industry with robotics
           </p>
         </div>
       </footer>

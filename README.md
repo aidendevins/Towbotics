@@ -16,10 +16,10 @@ A modern, aesthetic landing page showcasing Towbotics with integrated payment pr
 - **Node.js 18+** - Runtime environment
 - **Hosted on Railway** - Reliable backend hosting
 
-### Payment Processing
-- **Stripe** - Secure payment integration
-- Checkout sessions
-- Webhook handling
+### Future Features
+- **Stripe** - Payment integration (coming soon)
+- Contact form handling
+- Demo request system
 
 ---
 
@@ -76,15 +76,14 @@ npm run dev
 PORT=8000
 NODE_ENV=development
 FRONTEND_URL=http://localhost:5173
-STRIPE_SECRET_KEY=your_stripe_secret_key
-STRIPE_WEBHOOK_SECRET=your_webhook_secret
 ```
 
 **Frontend (.env.local)**
 ```env
 VITE_API_URL=http://localhost:8000/api
-VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
 ```
+
+Note: Create these files by copying from `env.example` in each directory.
 
 ---
 
@@ -127,9 +126,10 @@ towbotics/
 ## 🎯 Roadmap
 
 - [x] Project setup
-- [ ] Design landing page
-- [ ] Stripe integration
-- [ ] Deploy to production
+- [x] Design Towbotics landing page
+- [x] Contact/Demo endpoints
+- [ ] Deploy to production (Vercel + Railway)
+- [ ] Stripe integration (future)
 - [ ] Custom domain
 - [ ] Analytics
 
