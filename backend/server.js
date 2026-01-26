@@ -3,11 +3,14 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
+// Railway automatically sets PORT - use it, fallback to 8000 for local dev
 const PORT = process.env.PORT || 8000;
 
 // Middleware
+// CORS configuration - allow frontend URL or default to localhost for dev
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: frontendUrl,
   credentials: true
 }));
 app.use(express.json());
