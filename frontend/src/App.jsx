@@ -12,6 +12,7 @@ function App() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isCarouselHovered, setIsCarouselHovered] = useState(false);
 
   const carouselImages = [
     {
@@ -65,6 +66,17 @@ function App() {
       .then(() => setApiStatus('Connected'))
       .catch(() => setApiStatus(''));
   }, []);
+
+  // Auto-advance carousel when not hovered
+  useEffect(() => {
+    if (isCarouselHovered) return;
+
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [isCarouselHovered, carouselImages.length]);
 
   const scrollToReservation = () => {
     const element = document.getElementById('reservation');
@@ -258,7 +270,11 @@ function App() {
           </div>
 
           {/* Product Image Carousel */}
-          <div className="relative">
+          <div
+            className="relative"
+            onMouseEnter={() => setIsCarouselHovered(true)}
+            onMouseLeave={() => setIsCarouselHovered(false)}
+          >
             <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-slate-700" style={{
               background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
             }}>
@@ -267,20 +283,21 @@ function App() {
                 {carouselImages.map((image, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-opacity duration-500 ${
-                      index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                    className={`absolute inset-0 transition-all duration-700 ease-out ${
+                      index === currentSlide
+                        ? 'opacity-100 scale-100'
+                        : 'opacity-0 scale-95 pointer-events-none'
                     }`}
                   >
-                    <div className="relative w-full h-full" style={{
-                      WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)',
-                      WebkitMaskComposite: 'source-in',
-                      maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)',
-                      maskComposite: 'intersect'
-                    }}>
+                    <div className="relative w-full h-full flex items-center justify-center">
                       <img
                         src={image.src}
                         alt={image.title}
-                        className="w-full h-full object-contain"
+                        className="max-w-full max-h-full object-contain"
+                        style={{
+                          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+                          maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)'
+                        }}
                       />
                     </div>
                   </div>
@@ -308,7 +325,7 @@ function App() {
               </button>
 
               {/* Image Info Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/95 via-slate-900/70 to-transparent p-8 pt-20">
+              <div className="absolute bottom-0 left-0 right-0 bg-slate-900/90 p-8">
                 <h3 className="text-2xl font-bold text-white mb-2">
                   {carouselImages[currentSlide].title}
                 </h3>
