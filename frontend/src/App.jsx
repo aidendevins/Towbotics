@@ -289,17 +289,11 @@ function App() {
                         : 'opacity-0 scale-95 pointer-events-none'
                     }`}
                   >
-                    <div className="relative w-full h-full flex items-center justify-center">
-                      <img
-                        src={image.src}
-                        alt={image.title}
-                        className="max-w-full max-h-full object-contain"
-                        style={{
-                          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
-                          maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)'
-                        }}
-                      />
-                    </div>
+                    <img
+                      src={image.src}
+                      alt={image.title}
+                      className="w-full h-full object-contain"
+                    />
                   </div>
                 ))}
               </div>
@@ -325,7 +319,7 @@ function App() {
               </button>
 
               {/* Image Info Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-slate-900/90 p-8">
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/95 via-slate-900/70 to-transparent p-8 pt-20">
                 <h3 className="text-2xl font-bold text-white mb-2">
                   {carouselImages[currentSlide].title}
                 </h3>
