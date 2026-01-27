@@ -116,15 +116,19 @@ function App() {
           </div>
 
           {/* Product Video */}
-          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700">
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/3gdfh3WsR2I?autoplay=1&mute=1&loop=1&playlist=3gdfh3WsR2I&controls=1&modestbranding=1&rel=0&showinfo=0"
-              title="TowBotics System Demo"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900">
+            <video
+              className="w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+              controls
+              preload="auto"
+            >
+              <source src="/towbotics-promo.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
           </div>
         </div>
       </section>
