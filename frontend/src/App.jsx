@@ -73,6 +73,13 @@ function App() {
     }
   };
 
+  const scrollToDemo = () => {
+    const element = document.getElementById('demo-video');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
   const handleReservationSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -151,10 +158,13 @@ function App() {
                 className="px-8 py-4 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 transition-all transform hover:scale-105 shadow-lg"
               >
                 Get Early Access
-            </button>
-              <button className="px-8 py-4 bg-white text-slate-800 font-bold rounded-xl border-2 border-slate-200 hover:border-slate-300 transition-all">
+              </button>
+              <button
+                onClick={scrollToDemo}
+                className="px-8 py-4 bg-white text-slate-800 font-bold rounded-xl border-2 border-slate-200 hover:border-slate-300 transition-all"
+              >
                 Watch Demo
-            </button>
+              </button>
             </div>
             <p className="text-slate-500 text-sm">
               Trusted by Forest River · The largest travel trailer manufacturer in the U.S.
@@ -162,7 +172,10 @@ function App() {
           </div>
 
           {/* Product Video */}
-          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900">
+          <div
+            id="demo-video"
+            className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900"
+          >
             <iframe
               className="absolute inset-0 w-full h-full"
               src="https://www.youtube.com/embed/3gdfh3WsR2I?autoplay=1&mute=1&loop=1&playlist=3gdfh3WsR2I&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1"
