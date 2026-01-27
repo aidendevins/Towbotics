@@ -20,6 +20,13 @@ function App() {
       .catch(() => setApiStatus(''));
   }, []);
 
+  const scrollToReservation = () => {
+    const element = document.getElementById('reservation');
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
   const handleReservationSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -64,7 +71,10 @@ function App() {
               <a href="#features" className="text-slate-700 hover:text-amber-600 font-medium transition">Features</a>
               <a href="#how-it-works" className="text-slate-700 hover:text-amber-600 font-medium transition">How It Works</a>
               <a href="#who" className="text-slate-700 hover:text-amber-600 font-medium transition">Who It's For</a>
-              <button className="px-6 py-2.5 bg-slate-800 text-white font-semibold rounded-lg hover:bg-slate-800 transition">
+              <button 
+                onClick={scrollToReservation}
+                className="px-6 py-2.5 bg-slate-800 text-white font-semibold rounded-lg hover:bg-slate-700 transition"
+              >
                 Get Early Access
               </button>
             </div>
@@ -90,7 +100,10 @@ function App() {
               The first remote-controlled trailer positioning system that eliminates the physical strain, precision difficulty, and injury risk of manual hitching.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
-              <button className="px-8 py-4 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 transition-all transform hover:scale-105 shadow-lg">
+              <button 
+                onClick={scrollToReservation}
+                className="px-8 py-4 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 transition-all transform hover:scale-105 shadow-lg"
+              >
                 Get Early Access
             </button>
               <button className="px-8 py-4 bg-white text-slate-800 font-bold rounded-xl border-2 border-slate-200 hover:border-slate-300 transition-all">
@@ -397,7 +410,7 @@ function App() {
       </section>
 
       {/* Pricing Section - Slate Style */}
-      <section className="py-20 bg-white">
+      <section id="reservation" className="py-20 bg-white">
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
@@ -457,7 +470,7 @@ function App() {
                   </div>
                   <h4 className="text-2xl font-black text-slate-800 mb-2">Reserve for $50</h4>
                   <p className="text-slate-600 text-sm">100% refundable · No commitment</p>
-                </div>
+        </div>
 
                 <form onSubmit={handleReservationSubmit} className="space-y-4">
                   {submitStatus === 'success' && (
