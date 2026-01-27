@@ -184,22 +184,22 @@ function App() {
               <span className="text-amber-600">this hard.</span>
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Manual hitching is physically demanding, time-consuming, and dangerous. For elderly RV owners, it's often the reason they stop traveling—or sell their trailer entirely.
+              Manual hitching is physically demanding, time-consuming, and dangerous. For some RV owners, it's often the reason they stop traveling—or sell their trailer entirely.
             </p>
         </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <PainPointCard
               title="Physical Strain"
-              description="Lifting 650 lbs of tongue weight. Cranking manually. Pushing trailers by hand. For owners with arthritis or reduced grip strength, it's exhausting or impossible."
+              description="Tongue weight and hitch hardware add up fast. Even with an electric jack, you’re still handling heavy components, awkward angles, and repeated bending or kneeling. For arthritis, back pain, or reduced grip strength, hitching can be painful or impossible."
               />
             <PainPointCard
               title="Precision Trap"
-              description="Aligning a 2-inch coupler within 1 inch of the hitch ball—often taking 15-30 minutes of back-and-forth. One misalignment and you start over."
+              description="You’re aligning a 2-inch coupler to a hitch ball with inch-level accuracy—often while inching a vehicle back and forth. Small errors mean multiple resets: adjust height, reposition, try again. It can take 15–30 minutes solo."
             />
             <PainPointCard
               title="Real Danger"
-              description="Injuries happen. Ian feared being crushed between his truck and trailer. John nearly lost a finger when a coupler slipped. Damage and injuries are common."
+              description="Hitching puts you in pinch-and-crush zones—between truck and trailer, under the coupler, around chains and weight-distribution bars. One slip, roll, or misstep can mean injuries, smashed fingers, or a runaway trailer. The consequences are real."
           />
         </div>
 
@@ -207,7 +207,7 @@ function App() {
             <p className="text-slate-700 text-lg mb-4 italic">
               "Hitching difficulty is the most common complaint we hear, especially from older and inexperienced users. Some elderly owners have sold their trailers because hitching became too physically demanding."
             </p>
-            <p className="font-semibold text-slate-800">— Retailers, after 100+ customer interviews</p>
+            <p className="font-semibold text-slate-800">— What we heard in 100+ RV owner interviews</p>
           </div>
         </div>
       </section>
