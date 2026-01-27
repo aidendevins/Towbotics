@@ -7,10 +7,24 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Middleware
-// CORS configuration - allow frontend URL or default to localhost for dev
-const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';
+// CORS configuration - allow frontend URL(s) or default to localhost for dev
+const frontendUrls = process.env.FRONTEND_URL 
+  ? process.env.FRONTEND_URL.split(',').map(url => url.trim())
+  : ['http://localhost:5173'];
 app.use(cors({
-  origin: frontendUrl,
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, Postman, etc.) in development
+    if (!origin && process.env.NODE_ENV !== 'production') {
+      return callback(null, true);
+    }
+    
+    // Check if origin matches any allowed URL
+    if (!origin || frontendUrls.some(url => origin === url || origin.startsWith(url))) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true
 }));
 app.use(express.json());
