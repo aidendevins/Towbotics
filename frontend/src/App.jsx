@@ -25,7 +25,7 @@ function App() {
               <a href="#features" className="text-slate-700 hover:text-amber-600 font-medium transition">Features</a>
               <a href="#how-it-works" className="text-slate-700 hover:text-amber-600 font-medium transition">How It Works</a>
               <a href="#who" className="text-slate-700 hover:text-amber-600 font-medium transition">Who It's For</a>
-              <button className="px-6 py-2.5 bg-slate-900 text-white font-semibold rounded-lg hover:bg-slate-800 transition">
+              <button className="px-6 py-2.5 bg-slate-700 text-white font-semibold rounded-lg hover:bg-slate-700 transition">
                 Get Early Access
               </button>
             </div>
@@ -51,7 +51,7 @@ function App() {
               The remote-controlled trailer mover that makes precise alignment easy—so you can hitch solo, safely, and in a fraction of the time.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="px-8 py-4 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-all transform hover:scale-105 shadow-lg">
+              <button className="px-8 py-4 bg-slate-700 text-white font-bold rounded-xl hover:bg-slate-700 transition-all transform hover:scale-105 shadow-lg">
                 Reserve Your Spot — $50
               </button>
               <button className="px-8 py-4 bg-white text-slate-900 font-bold rounded-xl border-2 border-slate-200 hover:border-slate-300 transition-all">
@@ -61,7 +61,7 @@ function App() {
           </div>
 
           {/* Product Showcase Placeholder */}
-          <div className="relative aspect-video bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl overflow-hidden shadow-2xl border border-slate-700">
+          <div className="relative aspect-video bg-gradient-to-br from-slate-600 to-slate-700 rounded-3xl overflow-hidden shadow-2xl border border-slate-600">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-6xl mb-4">🎥</div>
@@ -113,7 +113,7 @@ function App() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-slate-900">
+      <section id="features" className="py-20 bg-slate-700">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
@@ -150,7 +150,7 @@ function App() {
 
           {/* Product Image Carousel Placeholder */}
           <div className="relative">
-            <div className="aspect-[16/9] bg-gradient-to-br from-slate-800 to-slate-700 rounded-3xl overflow-hidden">
+            <div className="aspect-[16/9] bg-gradient-to-br from-slate-600 to-slate-500 rounded-3xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-6xl mb-4">📸</div>
@@ -234,7 +234,7 @@ function App() {
       </section>
 
       {/* Social Proof / Stats Section */}
-      <section className="py-20 bg-slate-900">
+      <section className="py-20 bg-slate-700">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-12 text-center">
             <StatCard number="500+" label="RV Owners Interviewed" />
@@ -274,7 +274,7 @@ function App() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-900 to-slate-800">
+      <section className="py-20 bg-gradient-to-br from-slate-700 to-slate-600">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
             Ready to Make Hitching <span className="text-amber-500">Easy?</span>
@@ -292,7 +292,7 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-900 border-t border-slate-800 py-12">
+      <footer className="bg-slate-700 border-t border-slate-700 py-12">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -328,7 +328,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="border-t border-slate-700 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-slate-500 text-sm">
               © 2026 TowBotics. All rights reserved.
             </p>
