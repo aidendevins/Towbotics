@@ -18,14 +18,14 @@ function App() {
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-md border-b border-gray-200 z-50">
         <div className="container mx-auto px-6 py-4">
           <div className="flex justify-between items-center">
-            <div className="text-2xl font-black text-slate-900">
+            <div className="text-2xl font-black text-slate-800">
               TOW<span className="text-amber-600">BOTICS</span>
             </div>
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-slate-700 hover:text-amber-600 font-medium transition">Features</a>
               <a href="#how-it-works" className="text-slate-700 hover:text-amber-600 font-medium transition">How It Works</a>
               <a href="#who" className="text-slate-700 hover:text-amber-600 font-medium transition">Who It's For</a>
-              <button className="px-6 py-2.5 bg-slate-700 text-white font-semibold rounded-lg hover:bg-slate-700 transition">
+              <button className="px-6 py-2.5 bg-slate-800 text-white font-semibold rounded-lg hover:bg-slate-800 transition">
                 Get Early Access
               </button>
             </div>
@@ -41,7 +41,7 @@ function App() {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full text-amber-900 text-sm font-semibold mb-6">
               🚀 Patent-pending technology from Georgia Tech
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-slate-900 mb-6 leading-tight">
+            <h1 className="text-5xl md:text-7xl font-black text-slate-800 mb-6 leading-tight">
               Hitch Your Trailer.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500">
                 By Yourself. In Minutes.
@@ -51,17 +51,17 @@ function App() {
               The remote-controlled trailer mover that makes precise alignment easy—so you can hitch solo, safely, and in a fraction of the time.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="px-8 py-4 bg-slate-700 text-white font-bold rounded-xl hover:bg-slate-700 transition-all transform hover:scale-105 shadow-lg">
+              <button className="px-8 py-4 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-800 transition-all transform hover:scale-105 shadow-lg">
                 Reserve Your Spot — $50
               </button>
-              <button className="px-8 py-4 bg-white text-slate-900 font-bold rounded-xl border-2 border-slate-200 hover:border-slate-300 transition-all">
+              <button className="px-8 py-4 bg-white text-slate-800 font-bold rounded-xl border-2 border-slate-200 hover:border-slate-300 transition-all">
                 Watch Demo Video
               </button>
             </div>
           </div>
 
           {/* Product Showcase Placeholder */}
-          <div className="relative aspect-video bg-gradient-to-br from-slate-600 to-slate-700 rounded-3xl overflow-hidden shadow-2xl border border-slate-600">
+          <div className="relative aspect-video bg-gradient-to-br from-slate-700 to-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
                 <div className="text-6xl mb-4">🎥</div>
@@ -83,7 +83,7 @@ function App() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
               The Hardest Part of Towing?<br />
               <span className="text-amber-600">We Fixed It.</span>
             </h2>
@@ -113,7 +113,7 @@ function App() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-slate-700">
+      <section id="features" className="py-20 bg-slate-800">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
@@ -150,7 +150,7 @@ function App() {
 
           {/* Product Image Carousel Placeholder */}
           <div className="relative">
-            <div className="aspect-[16/9] bg-gradient-to-br from-slate-600 to-slate-500 rounded-3xl overflow-hidden">
+            <div className="aspect-[16/9] bg-gradient-to-br from-slate-700 to-slate-600 rounded-3xl overflow-hidden">
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="text-center">
                   <div className="text-6xl mb-4">📸</div>
@@ -162,9 +162,9 @@ function App() {
             {/* Carousel indicators */}
             <div className="flex justify-center gap-2 mt-6">
               <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-              <div className="w-2 h-2 bg-slate-600 rounded-full"></div>
-              <div className="w-2 h-2 bg-slate-600 rounded-full"></div>
-              <div className="w-2 h-2 bg-slate-600 rounded-full"></div>
+              <div className="w-2 h-2 bg-slate-700 rounded-full"></div>
+              <div className="w-2 h-2 bg-slate-700 rounded-full"></div>
+              <div className="w-2 h-2 bg-slate-700 rounded-full"></div>
             </div>
           </div>
         </div>
@@ -174,7 +174,7 @@ function App() {
       <section id="how-it-works" className="py-20 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
               Hitch in <span className="text-amber-600">3 Simple Steps</span>
             </h2>
           </div>
@@ -203,7 +203,7 @@ function App() {
       <section id="who" className="py-20 bg-slate-50">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
               Built For <span className="text-amber-600">Real RV Owners</span>
             </h2>
           </div>
@@ -234,7 +234,7 @@ function App() {
       </section>
 
       {/* Social Proof / Stats Section */}
-      <section className="py-20 bg-slate-700">
+      <section className="py-20 bg-slate-800">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="grid md:grid-cols-3 gap-12 text-center">
             <StatCard number="500+" label="RV Owners Interviewed" />
@@ -248,7 +248,7 @@ function App() {
       <section className="py-20 bg-white">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
               What <span className="text-amber-600">RV Owners</span> Are Saying
             </h2>
           </div>
@@ -274,7 +274,7 @@ function App() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-700 to-slate-600">
+      <section className="py-20 bg-gradient-to-br from-slate-800 to-slate-700">
         <div className="container mx-auto px-6 max-w-4xl text-center">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
             Ready to Make Hitching <span className="text-amber-500">Easy?</span>
@@ -282,7 +282,7 @@ function App() {
           <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
             Reserve your spot for just $50 (fully refundable). Be among the first to experience stress-free hitching.
           </p>
-          <button className="px-10 py-5 bg-amber-500 text-slate-900 font-black text-lg rounded-xl hover:bg-amber-400 transition-all transform hover:scale-105 shadow-xl">
+          <button className="px-10 py-5 bg-amber-500 text-slate-800 font-black text-lg rounded-xl hover:bg-amber-400 transition-all transform hover:scale-105 shadow-xl">
             Reserve Your TowBotics — $50
           </button>
           <p className="text-slate-400 text-sm mt-6">
@@ -292,7 +292,7 @@ function App() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-slate-700 border-t border-slate-700 py-12">
+      <footer className="bg-slate-800 border-t border-slate-800 py-12">
         <div className="container mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
@@ -328,7 +328,7 @@ function App() {
               </div>
             </div>
           </div>
-          <div className="border-t border-slate-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+          <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center">
             <p className="text-slate-500 text-sm">
               © 2026 TowBotics. All rights reserved.
             </p>
@@ -348,7 +348,7 @@ function PainPointCard({ icon, title, description }) {
   return (
     <div className="bg-slate-50 rounded-2xl p-8 border-2 border-slate-200">
       <div className="text-5xl mb-4">{icon}</div>
-      <h3 className="text-xl font-bold text-slate-900 mb-3">{title}</h3>
+      <h3 className="text-xl font-bold text-slate-800 mb-3">{title}</h3>
       <p className="text-slate-600">{description}</p>
     </div>
   );
@@ -369,10 +369,10 @@ function FeatureBlock({ icon, title, description }) {
 function StepCard({ number, title, description }) {
   return (
     <div className="relative">
-      <div className="bg-amber-500 text-slate-900 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black mb-6">
+      <div className="bg-amber-500 text-slate-800 w-12 h-12 rounded-full flex items-center justify-center text-2xl font-black mb-6">
         {number}
       </div>
-      <h3 className="text-2xl font-bold text-slate-900 mb-3">{title}</h3>
+      <h3 className="text-2xl font-bold text-slate-800 mb-3">{title}</h3>
       <p className="text-slate-600 leading-relaxed">{description}</p>
     </div>
   );
@@ -382,7 +382,7 @@ function AudienceCard({ icon, title, description }) {
   return (
     <div className="bg-white rounded-2xl p-6 border-2 border-slate-200 hover:border-amber-500 transition-all hover:shadow-lg">
       <div className="text-4xl mb-4">{icon}</div>
-      <h3 className="text-lg font-bold text-slate-900 mb-2">{title}</h3>
+      <h3 className="text-lg font-bold text-slate-800 mb-2">{title}</h3>
       <p className="text-slate-600 text-sm">{description}</p>
     </div>
   );
@@ -402,7 +402,7 @@ function TestimonialCard({ quote, author, role }) {
     <div className="bg-slate-50 rounded-2xl p-8 border-2 border-slate-200">
       <p className="text-slate-700 text-lg mb-6 italic">"{quote}"</p>
       <div>
-        <p className="font-semibold text-slate-900">{author}</p>
+        <p className="font-semibold text-slate-800">{author}</p>
         <p className="text-slate-500 text-sm">{role}</p>
       </div>
     </div>
