@@ -359,22 +359,139 @@ function App() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-br from-slate-800 to-slate-700">
-        <div className="container mx-auto px-6 max-w-4xl text-center">
-          <h2 className="text-4xl md:text-5xl font-black text-white mb-6">
-            Stop letting hitching<br />
-            <span className="text-amber-500">limit your adventures.</span>
-          </h2>
-          <p className="text-xl text-slate-300 mb-10 max-w-2xl mx-auto">
-            Get early access to TowBotics. Expected retail: $1,500–$3,000. Installation included. One-year warranty.
-          </p>
-          <button className="px-10 py-5 bg-amber-500 text-slate-800 font-black text-lg rounded-xl hover:bg-amber-400 transition-all transform hover:scale-105 shadow-xl">
-            Request Early Access
-          </button>
-          <p className="text-slate-400 text-sm mt-6">
-            Limited production run · Priority given to early registrants
-          </p>
+      {/* Pricing Section - Slate Style */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 max-w-5xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
+              Reserve yours today.
+            </h2>
+            <p className="text-xl text-slate-600 max-w-2xl mx-auto">
+              $50 (fully refundable) locks your spot for TowBotics. Reserve early, get your TowBotics early. When ordering opens, you'll be able to pick options and finalize your system.
+            </p>
+          </div>
+
+          {/* Pricing Card */}
+          <div className="bg-gradient-to-br from-slate-800 to-slate-700 rounded-3xl p-8 md:p-12 shadow-2xl mb-12">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div className="text-white">
+                <p className="text-slate-300 text-sm font-semibold mb-2">STARTING AT</p>
+                <h3 className="text-5xl md:text-6xl font-black mb-4">
+                  $2,500<span className="text-3xl text-slate-400">–$5,000</span>
+                </h3>
+                <p className="text-slate-300 mb-6">
+                  Final price depends on your configuration and installation options. Reserve now to lock in early pricing.
+                </p>
+                <ul className="space-y-3 text-slate-300">
+                  <li className="flex items-start gap-3">
+                    <svg className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Complete positioning and powered jack system</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Bluetooth remote control included</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>Professional installation available</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <svg className="w-6 h-6 text-amber-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span>One-year warranty included</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* Reservation Form */}
+              <div className="bg-white rounded-2xl p-8 shadow-xl">
+                <div className="text-center mb-6">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-amber-100 rounded-full mb-4">
+                    <svg className="w-8 h-8 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h4 className="text-2xl font-black text-slate-800 mb-2">Reserve for $50</h4>
+                  <p className="text-slate-600 text-sm">100% refundable · No commitment</p>
+                </div>
+
+                <form className="space-y-4">
+                  <div>
+                    <label className="block text-slate-700 text-sm font-semibold mb-2">Email</label>
+                    <input
+                      type="email"
+                      placeholder="your@email.com"
+                      className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
+                      required
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-slate-700 text-sm font-semibold mb-2">First Name</label>
+                      <input
+                        type="text"
+                        placeholder="John"
+                        className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <label className="block text-slate-700 text-sm font-semibold mb-2">Last Name</label>
+                      <input
+                        type="text"
+                        placeholder="Smith"
+                        className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="block text-slate-700 text-sm font-semibold mb-2">Phone (optional)</label>
+                    <input
+                      type="tel"
+                      placeholder="(555) 123-4567"
+                      className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className="w-full px-6 py-4 bg-amber-500 text-white font-black rounded-xl hover:bg-amber-400 transition-all transform hover:scale-105 shadow-lg"
+                  >
+                    Reserve for $50
+                  </button>
+                  <p className="text-slate-500 text-xs text-center">
+                    You'll receive a confirmation email with next steps. Payment processed securely.
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          {/* How Reservation Works */}
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full text-amber-600 font-black text-xl mb-4">1</div>
+              <h4 className="font-bold text-slate-800 mb-2">Reserve Your Spot</h4>
+              <p className="text-slate-600 text-sm">$50 (fully refundable) holds your place in line. No need to configure anything yet.</p>
+            </div>
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full text-amber-600 font-black text-xl mb-4">2</div>
+              <h4 className="font-bold text-slate-800 mb-2">Configure Later</h4>
+              <p className="text-slate-600 text-sm">When ordering opens, pick your options: installation service, warranty extensions, accessories.</p>
+            </div>
+            <div className="text-center">
+              <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full text-amber-600 font-black text-xl mb-4">3</div>
+              <h4 className="font-bold text-slate-800 mb-2">Get Your TowBotics</h4>
+              <p className="text-slate-600 text-sm">Early reservations get priority. We'll notify you when your TowBotics is ready to ship.</p>
+            </div>
+          </div>
         </div>
       </section>
 
