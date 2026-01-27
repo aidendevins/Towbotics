@@ -65,20 +65,16 @@ function App() {
             </p>
           </div>
 
-          {/* Product Showcase Placeholder */}
-          <div className="relative aspect-video bg-gradient-to-br from-slate-700 to-slate-800 rounded-3xl overflow-hidden shadow-2xl border border-slate-700">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <p className="text-white/80 text-lg font-semibold mb-2">TowBotics System in Action</p>
-                <p className="text-white/50 text-sm">Remote-controlled positioning and powered jack</p>
-              </div>
-            </div>
-            {/* Play button overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <button className="w-20 h-20 bg-white/20 backdrop-blur-sm hover:bg-white/30 rounded-full flex items-center justify-center transition-all transform hover:scale-110">
-                <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
-              </button>
-            </div>
+          {/* Product Video */}
+          <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700">
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/3gdfh3WsR2I?autoplay=1&mute=1&loop=1&playlist=3gdfh3WsR2I&controls=1&modestbranding=1&rel=0&showinfo=0"
+              title="TowBotics System Demo"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </section>
