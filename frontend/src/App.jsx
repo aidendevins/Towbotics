@@ -3,6 +3,14 @@ import './index.css';
 
 function App() {
   const [apiStatus, setApiStatus] = useState('checking...');
+  const [reservationForm, setReservationForm] = useState({
+    email: '',
+    firstName: '',
+    lastName: '',
+    phone: ''
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState(null);
 
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
@@ -11,6 +19,35 @@ function App() {
       .then(() => setApiStatus('Connected'))
       .catch(() => setApiStatus(''));
   }, []);
+
+  const handleReservationSubmit = async (e) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus(null);
+
+    try {
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+      const response = await fetch(`${API_URL}/reservation`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reservationForm),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setReservationForm({ email: '', firstName: '', lastName: '', phone: '' });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error('Reservation error:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-50" style={{
@@ -42,23 +79,23 @@ function App() {
           <div className="text-center mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full text-amber-900 text-sm font-semibold mb-6">
               Patent-Pending · Georgia Tech Innovation
-            </div>
+          </div>
             <h1 className="text-5xl md:text-7xl font-black text-slate-800 mb-6 leading-tight">
               Hitch independently.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500">
                 In under 3 minutes.
-              </span>
-            </h1>
+            </span>
+          </h1>
             <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
               The first remote-controlled trailer positioning system that eliminates the physical strain, precision difficulty, and injury risk of manual hitching.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <button className="px-8 py-4 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 transition-all transform hover:scale-105 shadow-lg">
                 Get Early Access
-              </button>
+            </button>
               <button className="px-8 py-4 bg-white text-slate-800 font-bold rounded-xl border-2 border-slate-200 hover:border-slate-300 transition-all">
                 Watch Demo
-              </button>
+            </button>
             </div>
             <p className="text-slate-500 text-sm">
               Trusted by Forest River · The largest travel trailer manufacturer in the U.S.
@@ -90,7 +127,7 @@ function App() {
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
               Manual hitching is physically demanding, time-consuming, and dangerous. For elderly RV owners, it's often the reason they stop traveling—or sell their trailer entirely.
             </p>
-          </div>
+        </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <PainPointCard
@@ -104,8 +141,8 @@ function App() {
             <PainPointCard
               title="Real Danger"
               description="Injuries happen. Ian feared being crushed between his truck and trailer. John nearly lost a finger when a coupler slipped. Damage and injuries are common."
-            />
-          </div>
+          />
+        </div>
 
           <div className="bg-slate-50 rounded-2xl p-8 border-2 border-slate-200 max-w-3xl mx-auto">
             <p className="text-slate-700 text-lg mb-4 italic">
@@ -422,12 +459,24 @@ function App() {
                   <p className="text-slate-600 text-sm">100% refundable · No commitment</p>
                 </div>
 
-                <form className="space-y-4">
+                <form onSubmit={handleReservationSubmit} className="space-y-4">
+                  {submitStatus === 'success' && (
+                    <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4">
+                      <p className="text-green-800 text-sm font-semibold">Reservation received! Check your email for next steps.</p>
+                    </div>
+                  )}
+                  {submitStatus === 'error' && (
+                    <div className="bg-red-50 border-2 border-red-200 rounded-lg p-4 mb-4">
+                      <p className="text-red-800 text-sm font-semibold">Something went wrong. Please try again or contact us.</p>
+                    </div>
+                  )}
                   <div>
                     <label className="block text-slate-700 text-sm font-semibold mb-2">Email</label>
                     <input
                       type="email"
                       placeholder="your@email.com"
+                      value={reservationForm.email}
+                      onChange={(e) => setReservationForm({ ...reservationForm, email: e.target.value })}
                       className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
                       required
                     />
@@ -438,6 +487,8 @@ function App() {
                       <input
                         type="text"
                         placeholder="John"
+                        value={reservationForm.firstName}
+                        onChange={(e) => setReservationForm({ ...reservationForm, firstName: e.target.value })}
                         className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
                         required
                       />
@@ -447,6 +498,8 @@ function App() {
                       <input
                         type="text"
                         placeholder="Smith"
+                        value={reservationForm.lastName}
+                        onChange={(e) => setReservationForm({ ...reservationForm, lastName: e.target.value })}
                         className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
                         required
                       />
@@ -457,22 +510,25 @@ function App() {
                     <input
                       type="tel"
                       placeholder="(555) 123-4567"
+                      value={reservationForm.phone}
+                      onChange={(e) => setReservationForm({ ...reservationForm, phone: e.target.value })}
                       className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
                     />
                   </div>
                   <button
                     type="submit"
-                    className="w-full px-6 py-4 bg-amber-500 text-white font-black rounded-xl hover:bg-amber-400 transition-all transform hover:scale-105 shadow-lg"
+                    disabled={isSubmitting}
+                    className="w-full px-6 py-4 bg-amber-500 text-white font-black rounded-xl hover:bg-amber-400 transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    Reserve for $50
+                    {isSubmitting ? 'Processing...' : 'Reserve for $50'}
                   </button>
                   <p className="text-slate-500 text-xs text-center">
                     You'll receive a confirmation email with next steps. Payment processed securely.
                   </p>
                 </form>
-              </div>
-            </div>
           </div>
+        </div>
+      </div>
 
           {/* How Reservation Works */}
           <div className="grid md:grid-cols-3 gap-8">

@@ -8,7 +8,8 @@ router.get('/', (req, res) => {
     version: '1.0.0',
     endpoints: {
       status: 'GET /api/status',
-      contact: 'POST /api/contact'
+      contact: 'POST /api/contact',
+      reservation: 'POST /api/reservation'
     }
   });
 });
@@ -60,6 +61,40 @@ router.post('/demo', (req, res) => {
   res.json({
     success: true,
     message: 'Demo request received! Our team will reach out within 24 hours.',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Reservation endpoint
+router.post('/reservation', (req, res) => {
+  const { email, firstName, lastName, phone } = req.body;
+  
+  // Basic validation
+  if (!email || !firstName || !lastName) {
+    return res.status(400).json({
+      error: 'Email, first name, and last name are required'
+    });
+  }
+
+  // TODO: In production:
+  // 1. Save to database
+  // 2. Integrate Stripe for $50 payment processing
+  // 3. Send confirmation email
+  // 4. Add to CRM/email list
+  
+  console.log('Reservation received:', { 
+    email, 
+    firstName, 
+    lastName, 
+    phone,
+    amount: 50,
+    timestamp: new Date().toISOString()
+  });
+  
+  res.json({
+    success: true,
+    message: 'Reservation received! Check your email for confirmation and next steps.',
+    reservationId: `RES-${Date.now()}`,
     timestamp: new Date().toISOString()
   });
 });
