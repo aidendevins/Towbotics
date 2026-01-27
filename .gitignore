@@ -39,3 +39,9 @@ coverage/
 # Misc
 .cache/
 .temp/
+
+# Large video files
+*.mp4
+*.mov
+frontend/public/*.mp4
+frontend/public/*.mov

@@ -11,6 +11,52 @@ function App() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState(null);
+  const [currentSlide, setCurrentSlide] = useState(0);
+
+  const carouselImages = [
+    {
+      src: '/Full System Close .png',
+      title: 'Integrated Assembly',
+      description: 'Complete view showing all components working together'
+    },
+    {
+      src: '/System Drive Train.png',
+      title: 'Drivetrain & Track System',
+      description: 'Four independent motors with differential drive for precise lateral positioning'
+    },
+    {
+      src: '/System Linear Actuator .png',
+      title: 'Powered Linear Actuator',
+      description: '22-inch stroke, 650 lbs tongue weight capacity, zero manual cranking'
+    },
+    {
+      src: '/System Bolt Onto A- Frame.png',
+      title: 'A-Frame Mount Detail',
+      description: 'Precision engineered mounting through standard A-frame opening'
+    },
+    {
+      src: '/System Screw On post bolting on.png',
+      title: 'Base Installation',
+      description: 'Secure mounting plate installation with basic hand tools'
+    },
+    {
+      src: '/System Superwide View with full trailer (too big).png',
+      title: 'Complete TowBotics System',
+      description: 'Full integration on A-frame showing entire trailer setup'
+    }
+  ];
+
+  const nextSlide = () => {
+    setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
+  };
+
+  const prevSlide = () => {
+    setCurrentSlide((prev) => (prev - 1 + carouselImages.length) % carouselImages.length);
+  };
+
+  const goToSlide = (index) => {
+    setCurrentSlide(index);
+  };
 
   useEffect(() => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
@@ -117,18 +163,14 @@ function App() {
 
           {/* Product Video */}
           <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900">
-            <video
-              className="w-full h-full object-cover"
-              autoPlay
-              loop
-              muted
-              playsInline
-              controls
-              preload="auto"
-            >
-              <source src="/towbotics-promo.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <iframe
+              className="absolute inset-0 w-full h-full"
+              src="https://www.youtube.com/embed/3gdfh3WsR2I?autoplay=1&mute=1&loop=1&playlist=3gdfh3WsR2I&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1"
+              title="TowBotics System Demo"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
           </div>
         </div>
       </section>
@@ -202,22 +244,81 @@ function App() {
             />
           </div>
 
-          {/* Product Image Carousel Placeholder */}
+          {/* Product Image Carousel */}
           <div className="relative">
-            <div className="aspect-[16/9] bg-gradient-to-br from-slate-700 to-slate-600 rounded-3xl overflow-hidden">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <p className="text-white/80 text-lg font-semibold mb-2">System Components</p>
-                  <p className="text-white/50 text-sm">Drivetrain, actuator, and control housing</p>
-                </div>
+            <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-slate-700" style={{
+              background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+            }}>
+              {/* Carousel Images */}
+              <div className="relative w-full h-full">
+                {carouselImages.map((image, index) => (
+                  <div
+                    key={index}
+                    className={`absolute inset-0 transition-opacity duration-500 ${
+                      index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                    }`}
+                  >
+                    <div className="relative w-full h-full" style={{
+                      WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)',
+                      WebkitMaskComposite: 'source-in',
+                      maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%), linear-gradient(to bottom, transparent 0%, black 8%, black 92%, transparent 100%)',
+                      maskComposite: 'intersect'
+                    }}>
+                      <img
+                        src={image.src}
+                        alt={image.title}
+                        className="w-full h-full object-contain"
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Navigation Buttons */}
+              <button
+                onClick={prevSlide}
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-slate-800/90 hover:bg-slate-700 text-white rounded-full flex items-center justify-center transition-all hover:scale-110 shadow-lg z-10"
+                aria-label="Previous slide"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
+              <button
+                onClick={nextSlide}
+                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-slate-800/90 hover:bg-slate-700 text-white rounded-full flex items-center justify-center transition-all hover:scale-110 shadow-lg z-10"
+                aria-label="Next slide"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+
+              {/* Image Info Overlay */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/95 via-slate-900/70 to-transparent p-8 pt-20">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  {carouselImages[currentSlide].title}
+                </h3>
+                <p className="text-slate-300 text-sm">
+                  {carouselImages[currentSlide].description}
+                </p>
               </div>
             </div>
-            {/* Carousel indicators */}
+
+            {/* Carousel Indicators */}
             <div className="flex justify-center gap-2 mt-6">
-              <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
-              <div className="w-2 h-2 bg-slate-700 rounded-full"></div>
-              <div className="w-2 h-2 bg-slate-700 rounded-full"></div>
-              <div className="w-2 h-2 bg-slate-700 rounded-full"></div>
+              {carouselImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`h-2 rounded-full transition-all ${
+                    index === currentSlide
+                      ? 'w-8 bg-amber-500'
+                      : 'w-2 bg-slate-600 hover:bg-slate-500'
+                  }`}
+                  aria-label={`Go to slide ${index + 1}`}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -339,7 +440,7 @@ function App() {
             />
             <SpecCard
               label="Lateral Travel"
-              value="Up to 10 feet"
+              value="100's of feet"
             />
             <SpecCard
               label="Grade Capability"
@@ -355,7 +456,7 @@ function App() {
             />
             <SpecCard
               label="Installation Time"
-              value="<60 minutes"
+              value="Less than 20 min"
             />
             <SpecCard
               label="Environmental Rating"
