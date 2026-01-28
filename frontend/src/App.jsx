@@ -73,7 +73,7 @@ function App() {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
-    }, 6000);
+    }, 7500);
 
     return () => clearInterval(interval);
   }, [isCarouselHovered, carouselImages.length]);
@@ -170,13 +170,13 @@ function App() {
                 className="px-8 py-4 bg-slate-800 text-white font-bold rounded-xl hover:bg-slate-700 transition-all transform hover:scale-105 shadow-lg"
               >
                 Get Early Access
-              </button>
+            </button>
               <button
                 onClick={scrollToDemo}
                 className="px-8 py-4 bg-white text-slate-800 font-bold rounded-xl border-2 border-slate-200 hover:border-slate-300 transition-all"
               >
                 Watch Demo
-              </button>
+            </button>
             </div>
             <p className="text-slate-500 text-sm">
               Trusted by Forest River · The largest travel trailer manufacturer in the U.S.
@@ -215,16 +215,19 @@ function App() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <PainPointCard
-              title="Physical Strain"
-              description="Tongue weight and hitch hardware add up fast. Even with an electric jack, you’re still handling heavy components, awkward angles, and repeated bending or kneeling. For arthritis, back pain, or reduced grip strength, hitching can be painful or impossible."
+              image="/Remote Control 2.png"
+              title="No More Heavy Lifting"
+              description="Control everything from your remote. No cranking, no bending, no struggling with tongue weight—the powered jack does the work."
               />
             <PainPointCard
-              title="Precision Trap"
-              description="You’re aligning a 2-inch coupler to a hitch ball with inch-level accuracy—often while inching a vehicle back and forth. Small errors mean multiple resets: adjust height, reposition, try again. It can take 15–30 minutes solo."
+              image="/System Linear Actuator .png"
+              title="Easy Alignment"
+              description="Move your trailer in precise increments with the push of a button. See it line up perfectly from a safe distance, every time."
             />
             <PainPointCard
-              title="Real Danger"
-              description="Hitching puts you in pinch-and-crush zones—between truck and trailer, under the coupler, around chains and weight-distribution bars. One slip, roll, or misstep can mean injuries, smashed fingers, or a runaway trailer. The consequences are real."
+              image="/Full System Close .png"
+              title="Hitch from a Safe Distance"
+              description="Stay out of the danger zone. Control the entire hitching process from where you can see everything clearly."
           />
         </div>
 
@@ -271,11 +274,11 @@ function App() {
 
           {/* Product Image Carousel */}
           <div
-            className="relative"
+            className="relative -mx-6"
             onMouseEnter={() => setIsCarouselHovered(true)}
             onMouseLeave={() => setIsCarouselHovered(false)}
           >
-            <div className="relative aspect-[16/9] rounded-3xl overflow-hidden shadow-2xl border border-slate-700" style={{
+            <div className="relative h-[500px] md:h-[700px] overflow-hidden" style={{
               background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
             }}>
               {/* Carousel Images */}
@@ -283,17 +286,23 @@ function App() {
                 {carouselImages.map((image, index) => (
                   <div
                     key={index}
-                    className={`absolute inset-0 transition-all duration-700 ease-out ${
+                    className={`absolute inset-0 transition-all duration-1000 ease-in-out ${
                       index === currentSlide
                         ? 'opacity-100 scale-100'
-                        : 'opacity-0 scale-95 pointer-events-none'
+                        : 'opacity-0 scale-105 pointer-events-none'
                     }`}
                   >
-                    <img
-                      src={image.src}
-                      alt={image.title}
-                      className="w-full h-full object-contain"
-                    />
+                    <div className="relative w-full h-full flex items-center justify-center">
+                      <img
+                        src={image.src}
+                        alt={image.title}
+                        className="max-w-full max-h-full object-contain"
+                        style={{
+                          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
+                          maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)'
+                        }}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -319,26 +328,28 @@ function App() {
               </button>
 
               {/* Image Info Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/95 via-slate-900/70 to-transparent p-8 pt-20">
-                <h3 className="text-2xl font-bold text-white mb-2">
-                  {carouselImages[currentSlide].title}
-                </h3>
-                <p className="text-slate-300 text-sm">
-                  {carouselImages[currentSlide].description}
-                </p>
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/95 via-slate-900/80 to-transparent px-8 md:px-16 py-8 md:py-12 pt-32">
+                <div className="max-w-6xl mx-auto">
+                  <h3 className="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-3 transition-all duration-500">
+                    {carouselImages[currentSlide].title}
+                  </h3>
+                  <p className="text-slate-300 text-base md:text-lg max-w-3xl transition-all duration-500">
+                    {carouselImages[currentSlide].description}
+                  </p>
+                </div>
               </div>
             </div>
 
             {/* Carousel Indicators */}
-            <div className="flex justify-center gap-2 mt-6">
+            <div className="flex justify-center gap-3 mt-8">
               {carouselImages.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`h-2 rounded-full transition-all ${
+                  className={`h-2 rounded-full transition-all duration-300 ${
                     index === currentSlide
-                      ? 'w-8 bg-amber-500'
-                      : 'w-2 bg-slate-600 hover:bg-slate-500'
+                      ? 'w-12 bg-amber-500'
+                      : 'w-2 bg-slate-600 hover:bg-slate-500 hover:w-6'
                   }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
@@ -431,11 +442,10 @@ function App() {
       {/* Stats Section */}
       <section className="py-20 bg-slate-800">
         <div className="container mx-auto px-6 max-w-6xl">
-          <div className="grid md:grid-cols-4 gap-12 text-center">
+          <div className="grid md:grid-cols-3 gap-12 text-center">
             <StatCard number="<3 min" label="Average Hitching Time" />
-            <StatCard number="100+" label="Customer Interviews" />
-            <StatCard number="Patent" label="Pending IP" />
             <StatCard number="5,000 lb" label="Trailer Capacity" />
+            <StatCard number="<20 min" label="Installation Time" />
           </div>
         </div>
       </section>
@@ -463,28 +473,16 @@ function App() {
               value="22 inches"
             />
             <SpecCard
-              label="Lateral Travel"
-              value="100's of feet"
-            />
-            <SpecCard
               label="Grade Capability"
               value="Up to 5% incline"
-            />
-            <SpecCard
-              label="Stopping Distance"
-              value="<0.5 inches"
-            />
-            <SpecCard
-              label="Command Latency"
-              value="<150ms"
             />
             <SpecCard
               label="Installation Time"
               value="Less than 20 min"
             />
             <SpecCard
-              label="Environmental Rating"
-              value="IP54–IP65"
+              label="Remote Control Range"
+              value="Up to 30 feet"
             />
           </div>
 
@@ -556,7 +554,7 @@ function App() {
               <div className="text-white">
                 <p className="text-slate-300 text-sm font-semibold mb-2">STARTING AT</p>
                 <h3 className="text-5xl md:text-6xl font-black mb-4">
-                  $2,500<span className="text-3xl text-slate-400">–$5,000</span>
+                  $5,000
                 </h3>
                 <p className="text-slate-300 mb-6">
                   Final price depends on your configuration and installation options. Reserve now to lock in early pricing.
@@ -746,11 +744,22 @@ function App() {
 }
 
 // Component definitions
-function PainPointCard({ title, description }) {
+function PainPointCard({ image, title, description }) {
   return (
-    <div className="bg-slate-50 rounded-2xl p-8 border-2 border-slate-200 hover:border-amber-300 transition-all">
-      <h3 className="text-xl font-bold text-slate-800 mb-3">{title}</h3>
-      <p className="text-slate-600 leading-relaxed">{description}</p>
+    <div className="bg-slate-50 rounded-2xl overflow-hidden border-2 border-slate-200 hover:border-amber-300 transition-all">
+      {image && (
+        <div className="w-full">
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-64 md:h-80 object-cover"
+          />
+        </div>
+      )}
+      <div className="p-6">
+        <h3 className="text-lg font-bold text-slate-800 mb-2">{title}</h3>
+        <p className="text-sm text-slate-600 leading-relaxed">{description}</p>
+      </div>
     </div>
   );
 }
