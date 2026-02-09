@@ -1,6 +1,41 @@
 const express = require('express');
 const router = express.Router();
 
+// In-memory analytics store (resets on server restart; use DB in production)
+const pageViews = [];
+const events = [];
+
+const getClientInfo = (req) => ({
+  ip: req.ip || req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.connection?.remoteAddress || 'unknown',
+  userAgent: req.headers['user-agent'] || '',
+  timestamp: new Date().toISOString()
+});
+
+// Log page view (called by frontend on load)
+router.post('/analytics/view', (req, res) => {
+  const { path = '/', referrer = '' } = req.body || {};
+  const info = getClientInfo(req);
+  pageViews.push({ path, referrer, ...info });
+  res.json({ ok: true });
+});
+
+// Log event (e.g. click_reserve)
+router.post('/analytics/event', (req, res) => {
+  const { eventName, path = '/', ...rest } = req.body || {};
+  const info = getClientInfo(req);
+  events.push({ eventName, path, ...rest, ...info });
+  res.json({ ok: true });
+});
+
+// Admin: get all analytics (password protected)
+router.get('/admin/analytics', (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== 'Bearer 0612') {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+  res.json({ pageViews, events });
+});
+
 // Welcome endpoint
 router.get('/', (req, res) => {
   res.json({

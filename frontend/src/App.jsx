@@ -67,6 +67,21 @@ function App() {
       .catch(() => setApiStatus(''));
   }, []);
 
+  // Log page view for analytics (skip /admin)
+  useEffect(() => {
+    if (typeof window === 'undefined' || window.location.pathname === '/admin') return;
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+    fetch(`${API_URL}/analytics/view`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        path: window.location.pathname || '/',
+        referrer: document.referrer || '',
+      }),
+    }).catch(() => {});
+  }, []);
+
+
   // Auto-advance carousel when not hovered
   useEffect(() => {
     if (isCarouselHovered) return;
@@ -97,8 +112,17 @@ function App() {
     setIsSubmitting(true);
     setSubmitStatus(null);
 
+    // Log reserve/pay attempt for admin analytics
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
     try {
-      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+      await fetch(`${API_URL}/analytics/event`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ eventName: 'click_reserve', path: window.location.pathname || '/' }),
+      });
+    } catch (_) {}
+
+    try {
       const response = await fetch(`${API_URL}/reservation`, {
         method: 'POST',
         headers: {
