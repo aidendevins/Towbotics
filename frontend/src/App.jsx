@@ -565,10 +565,10 @@ function App() {
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
-              Reserve yours today.
+              Get in touch.
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              $50 (fully refundable) locks your spot for TowBotics. Reserve early, get your TowBotics early. When ordering opens, you'll be able to pick options and finalize your system.
+              No payment required. Share your email and we'll contact you when TowBotics is ready. Reserve your spot in line — when ordering opens, you'll pick options and finalize your system.
             </p>
           </div>
 
@@ -619,14 +619,14 @@ function App() {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
-                  <h4 className="text-2xl font-black text-slate-800 mb-2">Reserve for $50</h4>
-                  <p className="text-slate-600 text-sm">100% refundable · No commitment</p>
+                  <h4 className="text-2xl font-black text-slate-800 mb-2">Get in touch</h4>
+                  <p className="text-slate-600 text-sm">No payment · We'll contact you</p>
         </div>
 
                 <form onSubmit={handleReservationSubmit} className="space-y-4">
                   {submitStatus === 'success' && (
                     <div className="bg-green-50 border-2 border-green-200 rounded-lg p-4 mb-4">
-                      <p className="text-green-800 text-sm font-semibold">Reservation received! Check your email for next steps.</p>
+                      <p className="text-green-800 text-sm font-semibold">Thanks! We'll be in touch soon.</p>
                     </div>
                   )}
                   {submitStatus === 'error' && (
@@ -647,25 +647,23 @@ function App() {
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-slate-700 text-sm font-semibold mb-2">First Name</label>
+                      <label className="block text-slate-700 text-sm font-semibold mb-2">First Name (optional)</label>
                       <input
                         type="text"
                         placeholder="John"
                         value={reservationForm.firstName}
                         onChange={(e) => setReservationForm({ ...reservationForm, firstName: e.target.value })}
                         className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
-                        required
                       />
                     </div>
                     <div>
-                      <label className="block text-slate-700 text-sm font-semibold mb-2">Last Name</label>
+                      <label className="block text-slate-700 text-sm font-semibold mb-2">Last Name (optional)</label>
                       <input
                         type="text"
                         placeholder="Smith"
                         value={reservationForm.lastName}
                         onChange={(e) => setReservationForm({ ...reservationForm, lastName: e.target.value })}
                         className="w-full px-4 py-3 rounded-lg border-2 border-slate-200 focus:border-amber-500 focus:outline-none transition"
-                        required
                       />
                     </div>
                   </div>
@@ -684,10 +682,10 @@ function App() {
                     disabled={isSubmitting}
                     className="w-full px-6 py-4 bg-amber-500 text-white font-black rounded-xl hover:bg-amber-400 transition-all transform hover:scale-105 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
                   >
-                    {isSubmitting ? 'Processing...' : 'Reserve for $50'}
+                    {isSubmitting ? 'Sending...' : 'Get in touch'}
                   </button>
                   <p className="text-slate-500 text-xs text-center">
-                    You'll receive a confirmation email with next steps. Payment processed securely.
+                    We'll reach out with next steps. No payment required.
                   </p>
                 </form>
           </div>
@@ -698,8 +696,8 @@ function App() {
           <div className="grid md:grid-cols-3 gap-8">
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full text-amber-600 font-black text-xl mb-4">1</div>
-              <h4 className="font-bold text-slate-800 mb-2">Reserve Your Spot</h4>
-              <p className="text-slate-600 text-sm">$50 (fully refundable) holds your place in line. No need to configure anything yet.</p>
+              <h4 className="font-bold text-slate-800 mb-2">Share your contact info</h4>
+              <p className="text-slate-600 text-sm">No payment. We'll add you to the list and reach out when TowBotics is ready. No commitment.</p>
             </div>
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full text-amber-600 font-black text-xl mb-4">2</div>

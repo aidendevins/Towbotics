@@ -100,35 +100,29 @@ router.post('/demo', (req, res) => {
   });
 });
 
-// Reservation endpoint
+// Reservation / contact endpoint (no payment — we contact them)
 router.post('/reservation', (req, res) => {
   const { email, firstName, lastName, phone } = req.body;
   
-  // Basic validation
-  if (!email || !firstName || !lastName) {
+  if (!email || !email.trim()) {
     return res.status(400).json({
-      error: 'Email, first name, and last name are required'
+      error: 'Email is required'
     });
   }
 
-  // TODO: In production:
-  // 1. Save to database
-  // 2. Integrate Stripe for $50 payment processing
-  // 3. Send confirmation email
-  // 4. Add to CRM/email list
+  // TODO: In production, save to database and add to CRM/email list
   
-  console.log('Reservation received:', { 
-    email, 
-    firstName, 
-    lastName, 
-    phone,
-    amount: 50,
+  console.log('Contact / reservation received:', { 
+    email: email.trim(), 
+    firstName: (firstName || '').trim(), 
+    lastName: (lastName || '').trim(), 
+    phone: (phone || '').trim(),
     timestamp: new Date().toISOString()
   });
   
   res.json({
     success: true,
-    message: 'Reservation received! Check your email for confirmation and next steps.',
+    message: "Thanks! We'll be in touch soon.",
     reservationId: `RES-${Date.now()}`,
     timestamp: new Date().toISOString()
   });
