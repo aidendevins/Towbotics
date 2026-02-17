@@ -1,39 +1,69 @@
 const express = require('express');
 const router = express.Router();
-
-// In-memory analytics store (resets on server restart; use DB in production)
-const pageViews = [];
-const events = [];
+const { pool } = require('../db');
 
 const getClientInfo = (req) => ({
   ip: req.ip || req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.connection?.remoteAddress || 'unknown',
   userAgent: req.headers['user-agent'] || '',
-  timestamp: new Date().toISOString()
 });
 
 // Log page view (called by frontend on load)
-router.post('/analytics/view', (req, res) => {
+router.post('/analytics/view', async (req, res) => {
   const { path = '/', referrer = '' } = req.body || {};
   const info = getClientInfo(req);
-  pageViews.push({ path, referrer, ...info });
-  res.json({ ok: true });
+  
+  try {
+    await pool.query(
+      'INSERT INTO page_views (path, referrer, ip, user_agent) VALUES ($1, $2, $3, $4)',
+      [path, referrer, info.ip, info.userAgent]
+    );
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Error logging page view:', err);
+    res.status(500).json({ error: 'Failed to log view' });
+  }
 });
 
 // Log event (e.g. click_reserve)
-router.post('/analytics/event', (req, res) => {
-  const { eventName, path = '/', ...rest } = req.body || {};
+router.post('/analytics/event', async (req, res) => {
+  const { eventName, path = '/' } = req.body || {};
   const info = getClientInfo(req);
-  events.push({ eventName, path, ...rest, ...info });
-  res.json({ ok: true });
+  
+  try {
+    await pool.query(
+      'INSERT INTO events (event_name, path, ip, user_agent) VALUES ($1, $2, $3, $4)',
+      [eventName, path, info.ip, info.userAgent]
+    );
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Error logging event:', err);
+    res.status(500).json({ error: 'Failed to log event' });
+  }
 });
 
 // Admin: get all analytics (password protected)
-router.get('/admin/analytics', (req, res) => {
+router.get('/admin/analytics', async (req, res) => {
   const auth = req.headers.authorization;
   if (auth !== 'Bearer 0612') {
     return res.status(401).json({ error: 'Unauthorized' });
   }
-  res.json({ pageViews, events });
+
+  try {
+    const viewsResult = await pool.query(
+      'SELECT path, referrer, ip, user_agent AS "userAgent", timestamp FROM page_views ORDER BY timestamp DESC'
+    );
+    const eventsResult = await pool.query(
+      'SELECT event_name AS "eventName", path, ip, user_agent AS "userAgent", timestamp FROM events ORDER BY timestamp DESC'
+    );
+
+    res.json({
+      pageViews: viewsResult.rows,
+      events: eventsResult.rows,
+    });
+  } catch (err) {
+    console.error('Error fetching analytics:', err);
+    res.status(500).json({ error: 'Failed to fetch analytics' });
+  }
 });
 
 // Welcome endpoint

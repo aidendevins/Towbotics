@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
+const { initDB } = require('./db');
 
 const app = express();
 // Railway automatically sets PORT - use it, fallback to 8000 for local dev
@@ -63,10 +64,17 @@ app.use((req, res) => {
 });
 
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 Health check: http://localhost:${PORT}/health`);
+  
+  // Initialize database tables
+  if (process.env.DATABASE_URL) {
+    await initDB();
+  } else {
+    console.warn('⚠️  DATABASE_URL not set — analytics will not be saved');
+  }
 });
 
 module.exports = app;
