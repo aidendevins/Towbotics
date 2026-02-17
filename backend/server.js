@@ -8,25 +8,18 @@ const app = express();
 const PORT = process.env.PORT || 8000;
 
 // Middleware
-// CORS configuration - allow frontend URL(s) or default to localhost for dev
-const frontendUrls = process.env.FRONTEND_URL 
-  ? process.env.FRONTEND_URL.split(',').map(url => url.trim())
+// CORS: allow frontend URL(s). In production you MUST set FRONTEND_URL on Railway.
+const frontendUrls = process.env.FRONTEND_URL
+  ? process.env.FRONTEND_URL.split(',').map((url) => url.trim()).filter(Boolean)
   : ['http://localhost:5173'];
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, Postman, etc.) in development
-    if (!origin && process.env.NODE_ENV !== 'production') {
-      return callback(null, true);
-    }
-    
-    // Check if origin matches any allowed URL
-    if (!origin || frontendUrls.some(url => origin === url || origin.startsWith(url))) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
+    // Allow requests with no origin (e.g. health checks, Postman)
+    if (!origin) return callback(null, true);
+    if (frontendUrls.some((url) => origin === url || origin.startsWith(url))) return callback(null, true);
+    callback(new Error('Not allowed by CORS'));
   },
-  credentials: true
+  credentials: true,
 }));
 app.use(express.json());
 
@@ -68,13 +61,11 @@ app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📍 Environment: ${process.env.NODE_ENV || 'development'}`);
   console.log(`🌐 Health check: http://localhost:${PORT}/health`);
-  
-  // Initialize database tables
-  if (process.env.DATABASE_URL) {
-    await initDB();
-  } else {
-    console.warn('⚠️  DATABASE_URL not set — analytics will not be saved');
+  if (process.env.NODE_ENV === 'production') {
+    if (!process.env.FRONTEND_URL) console.warn('⚠️  FRONTEND_URL not set — CORS will block frontend requests. Set it in Railway Variables.');
+    if (!process.env.DATABASE_URL) console.warn('⚠️  DATABASE_URL not set — analytics will not be saved. Add a reference from Postgres in Railway.');
   }
+  if (process.env.DATABASE_URL) await initDB();
 });
 
 module.exports = app;
