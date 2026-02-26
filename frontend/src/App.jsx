@@ -708,8 +708,8 @@ function App() {
             </div>
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full text-amber-600 font-black text-xl mb-4">3</div>
-              <h4 className="font-bold text-slate-800 mb-2">Get Your TowBotics</h4>
-              <p className="text-slate-600 text-sm">Early reservations get priority. We'll notify you when your TowBotics is ready to ship.</p>
+              <h4 className="font-bold text-slate-800 mb-2">Get Your Towbot</h4>
+              <p className="text-slate-600 text-sm">Early reservations get priority. We'll notify you when your Towbot is ready to ship.</p>
             </div>
           </div>
         </div>
