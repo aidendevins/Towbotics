@@ -518,7 +518,8 @@ function App() {
         </div>
       </section>
 
-      {/* Industry Validation Section */}
+      {/* Industry Validation Section - HIDDEN */}
+      {false && (
       <section className="py-20 bg-slate-50">
         <div className="container mx-auto px-6 max-w-6xl">
           <div className="text-center mb-16">
@@ -559,6 +560,7 @@ function App() {
           </div>
         </div>
       </section>
+      )}
 
       {/* Pricing Section - Slate Style */}
       <section id="reservation" className="py-20 bg-white">
