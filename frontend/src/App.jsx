@@ -699,7 +699,7 @@ function App() {
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full text-amber-600 font-black text-xl mb-4">1</div>
               <h4 className="font-bold text-slate-800 mb-2">Share your contact info</h4>
-              <p className="text-slate-600 text-sm">No payment. We'll add you to the list and reach out when TowBotics is ready. No commitment.</p>
+              <p className="text-slate-600 text-sm">No payment. We'll add you to the list and reach out when Towbot is ready. Shipping begins later half of 2026. No commitment.</p>
             </div>
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-12 h-12 bg-amber-100 rounded-full text-amber-600 font-black text-xl mb-4">2</div>
