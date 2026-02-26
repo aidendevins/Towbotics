@@ -578,7 +578,7 @@ function App() {
               <div className="text-white">
                 <p className="text-slate-300 text-sm font-semibold mb-2">STARTING AT</p>
                 <h3 className="text-5xl md:text-6xl font-black mb-4">
-                  $10,000
+                  $7,500
                 </h3>
                 <p className="text-slate-300 mb-6">
                   Final price depends on your configuration and installation options. Reserve now to lock in early pricing.
