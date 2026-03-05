@@ -277,14 +277,14 @@ function App() {
               description="No spotter, no second person, no waiting for help. Drive your trailer to the hitch yourself — from the remote, on your own timeline, every single time."
             />
             <PainPointCard
-              image="/towbot-terrain.png"
-              title="Works Anywhere You Park"
-              description="Tight campground, crowded parking lot, narrow driveway — it doesn't matter. Permanently mounted to your trailer, it goes wherever you do and handles any space."
-            />
-            <PainPointCard
               image="/Remote Control 2.png"
               title="No Physical Strain or Injury Risk"
               description="Control everything from a handheld remote. No cranking, no bending, no guesswork — just precise, effortless positioning from a safe distance."
+            />
+            <PainPointCard
+              image="/towbot-terrain.png"
+              title="Works Anywhere You Park"
+              description="Tight campground, crowded parking lot, narrow driveway — it doesn't matter. Permanently mounted to your trailer, it goes wherever you do and handles any space."
             />
           </div>
 
