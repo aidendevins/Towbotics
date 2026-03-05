@@ -12,11 +12,25 @@ const PORT = process.env.PORT || 8000;
 const frontendUrls = process.env.FRONTEND_URL
   ? process.env.FRONTEND_URL.split(',').map((url) => url.trim()).filter(Boolean)
   : ['http://localhost:5173'];
+
+// Expand each URL to also allow the www / non-www counterpart automatically
+const allowedOrigins = new Set();
+frontendUrls.forEach((url) => {
+  allowedOrigins.add(url);
+  try {
+    const u = new URL(url);
+    if (u.hostname.startsWith('www.')) {
+      allowedOrigins.add(`${u.protocol}//${u.hostname.slice(4)}${u.port ? ':' + u.port : ''}`);
+    } else {
+      allowedOrigins.add(`${u.protocol}//www.${u.hostname}${u.port ? ':' + u.port : ''}`);
+    }
+  } catch (_) {}
+});
+
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (e.g. health checks, Postman)
     if (!origin) return callback(null, true);
-    if (frontendUrls.some((url) => origin === url || origin.startsWith(url))) return callback(null, true);
+    if (allowedOrigins.has(origin)) return callback(null, true);
     callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
