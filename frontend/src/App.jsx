@@ -157,7 +157,6 @@ function App() {
             <div className="hidden md:flex items-center gap-8">
               <a href="#features" className="text-slate-700 hover:text-amber-600 font-medium transition">Features</a>
               <a href="#how-it-works" className="text-slate-700 hover:text-amber-600 font-medium transition">How It Works</a>
-              <a href="#who" className="text-slate-700 hover:text-amber-600 font-medium transition">Who It's For</a>
               <button 
                 onClick={scrollToReservation}
                 className="px-6 py-2.5 bg-slate-800 text-white font-semibold rounded-lg hover:bg-slate-700 transition"
