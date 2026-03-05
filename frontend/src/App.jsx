@@ -314,8 +314,8 @@ function App() {
               description="Integrated linear actuator raises and lowers tongue weight up to 650 lbs. 22-inch stroke covers all standard hitch heights. No manual cranking. No physical strain."
             />
             <FeatureBlock
-              title="Stops the Moment You Let Go"
-              description="Built-in safety means the instant you release the remote, all motion stops. No runaway trailer risk, ever."
+              title="Built-In Safety"
+              description="The remote has a hold-to-operate switch — the system only moves while you're actively pressing it. The instant you release, drop the remote, or lose connection, everything stops dead. No runaway trailer, no accidental movement, ever."
             />
             <FeatureBlock
               title="Retrofit Installation"
