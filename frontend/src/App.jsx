@@ -430,43 +430,6 @@ function App() {
       </section>
 
       {/* Who It's For Section */}
-      <section id="who" className="py-20 bg-slate-50">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
-              Designed for owners who value <span className="text-amber-600">independence.</span>
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Our primary customers are elderly travel trailer owners who want to hitch independently—especially those with higher-value rigs who refuse to let physical limitations end their adventures.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
-            <AudienceCard
-              title="Elderly RV Owners"
-              description="If arthritis, reduced grip strength, or back problems make manual hitching exhausting or impossible, TowBotics lets you maintain your independence. Hitch without assistance, physical strain, or injury risk."
-            />
-            <AudienceCard
-              title="Premium Trailer Owners"
-              description="Owners of travel trailers valued over $50,000 want to protect their investment. Eliminate damage from misalignment, tight-space maneuvering, and tongue-weight mishaps."
-            />
-            <AudienceCard
-              title="Solo Travelers"
-              description="No spotter? No problem. Position your trailer, raise the jack, and hitch—all from the remote. No more walking back and forth between truck and trailer."
-            />
-            <AudienceCard
-              title="Frequent Hitchers"
-              description="If you move between home, storage, and campsites regularly, every hitch/unhitch cycle adds up. Cut your time from 15-30 minutes down to under 3 minutes."
-            />
-          </div>
-
-          <div className="text-center">
-            <p className="text-slate-600 text-sm mb-4">
-              Compatible with bumper-pull travel trailers · Standard 2.0-inch ball couplers · 12V trailer battery powered
-            </p>
-          </div>
-        </div>
-      </section>
 
       {/* Stats Section */}
       <section className="py-20 bg-slate-800">
