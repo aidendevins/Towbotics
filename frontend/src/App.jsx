@@ -177,11 +177,11 @@ function App() {
               Patent-Pending · Georgia Tech Innovation
           </div>
             <h1 className="text-5xl md:text-7xl font-black text-slate-800 mb-6 leading-tight">
-              Hitch independently.<br />
+              Move. Position. Hitch.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500">
-                In under 3 minutes.
-            </span>
-          </h1>
+                Anywhere.
+              </span>
+            </h1>
             <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
               The first remote-controlled trailer positioning system that eliminates the physical strain, precision difficulty, and injury risk of manual hitching.
             </p>
