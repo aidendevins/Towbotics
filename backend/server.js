@@ -27,11 +27,16 @@ frontendUrls.forEach((url) => {
   } catch (_) {}
 });
 
+console.log('✅ Allowed CORS origins:', [...allowedOrigins]);
+
 app.use(cors({
   origin: (origin, callback) => {
+    // Allow requests with no origin (health checks, Postman, server-side)
     if (!origin) return callback(null, true);
     if (allowedOrigins.has(origin)) return callback(null, true);
-    callback(new Error('Not allowed by CORS'));
+    console.warn(`⚠️  CORS blocked origin: ${origin}`);
+    // Return null (blocked) instead of throwing — avoids 500 errors
+    callback(null, false);
   },
   credentials: true,
 }));
