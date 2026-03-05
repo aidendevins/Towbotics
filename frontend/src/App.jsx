@@ -272,19 +272,19 @@ function App() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <PainPointCard
-              image="/Remote Control 2.png"
-              title="No More Heavy Lifting"
-              description="Control everything from your remote. No cranking, no bending, no struggling with tongue weight—the powered jack does the work."
-            />
-            <PainPointCard
               image="/System Linear Actuator .png"
-              title="Easy Alignment"
-              description="Move your trailer in precise increments with the push of a button. See it line up perfectly from a safe distance, every time."
+              title="Hitch Completely Solo"
+              description="No spotter, no second person, no waiting for help. Drive your trailer to the hitch yourself — from the remote, on your own timeline, every single time."
             />
             <PainPointCard
               image="/Full System Close .png"
-              title="Hitch from a Safe Distance"
-              description="Stay out of the danger zone. Control the entire hitching process from where you can see everything clearly."
+              title="Works Anywhere You Park"
+              description="Tight campground, crowded parking lot, narrow driveway — it doesn't matter. Permanently mounted to your trailer, it goes wherever you do and handles any space."
+            />
+            <PainPointCard
+              image="/Remote Control 2.png"
+              title="No Physical Strain or Injury Risk"
+              description="Control everything from a handheld remote. No cranking, no bending, no guesswork — just precise, effortless positioning from a safe distance."
             />
           </div>
 
