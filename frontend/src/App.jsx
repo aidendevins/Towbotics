@@ -205,18 +205,37 @@ function App() {
           </div>
 
           {/* Product Video */}
-          <div
-            id="demo-video"
-            className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900"
-          >
-            <iframe
-              className="absolute inset-0 w-full h-full"
-              src="https://www.youtube.com/embed/3gdfh3WsR2I?autoplay=1&mute=1&loop=1&playlist=3gdfh3WsR2I&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1"
-              title="TowBotics System Demo"
-              frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen
-            ></iframe>
+          <div id="demo-video">
+            {/* Prototype callout */}
+            <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-2xl px-5 py-4 mb-4">
+              <span className="text-amber-500 mt-0.5 flex-shrink-0">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M18 10A8 8 0 11 2 10a8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                </svg>
+              </span>
+              <p className="text-amber-900 text-sm leading-relaxed">
+                <strong>This video shows our working prototype.</strong> The production model — same core functionality, built for warranty, long-term durability, and all-weather road use — can be seen{' '}
+                <a
+                  href="#features"
+                  onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+                  className="underline font-semibold hover:text-amber-700 transition"
+                >
+                  above in the product gallery
+                </a>
+                . Shipping second half of 2026.
+              </p>
+            </div>
+
+            <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900">
+              <iframe
+                className="absolute inset-0 w-full h-full"
+                src="https://www.youtube.com/embed/3gdfh3WsR2I?autoplay=1&mute=1&loop=1&playlist=3gdfh3WsR2I&controls=1&modestbranding=1&rel=0&showinfo=0&iv_load_policy=3&disablekb=1&playsinline=1"
+                title="TowBotics System Demo — Working Prototype"
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
+            </div>
           </div>
         </div>
       </section>
