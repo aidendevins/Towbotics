@@ -277,7 +277,7 @@ function App() {
               description="No spotter, no second person, no waiting for help. Drive your trailer to the hitch yourself — from the remote, on your own timeline, every single time."
             />
             <PainPointCard
-              image="/System Linear Actuator .png"
+              image="/towbot-terrain.png"
               title="Works Anywhere You Park"
               description="Tight campground, crowded parking lot, narrow driveway — it doesn't matter. Permanently mounted to your trailer, it goes wherever you do and handles any space."
             />
