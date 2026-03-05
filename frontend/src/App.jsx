@@ -314,8 +314,8 @@ function App() {
               description="Integrated linear actuator raises and lowers tongue weight up to 650 lbs. 22-inch stroke covers all standard hitch heights. No manual cranking. No physical strain."
             />
             <FeatureBlock
-              title="Dead-Man Safety"
-              description="Built-in dead-man switch and electronic braking. If you release the remote or connection drops, all motion stops immediately. Stopping distance under 0.5 inches. Default-braked motors prevent runaway."
+              title="Stops the Moment You Let Go"
+              description="Built-in safety means the instant you release the remote, all motion stops. No runaway trailer risk, ever."
             />
             <FeatureBlock
               title="Retrofit Installation"
