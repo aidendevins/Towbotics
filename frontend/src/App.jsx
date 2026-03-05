@@ -306,8 +306,8 @@ function App() {
           {/* Feature Grid */}
           <div className="grid md:grid-cols-2 gap-12 mb-20">
             <FeatureBlock
-              title="Remote Positioning"
-              description="Four independent motors and differential drive let you move your trailer laterally with millimeter precision. Full 360° steering. Works on grass, gravel, asphalt, and up to 5% grade. Command-to-motion latency under 150ms."
+              title="Steer Your Trailer from Anywhere"
+              description="Using the handheld remote, four independent motors and differential drive let you move your trailer laterally with millimeter precision. Full 360° steering. Works on grass, gravel, asphalt, and up to 5% grade."
             />
             <FeatureBlock
               title="Lifts, Lowers & Retracts — Fully"
