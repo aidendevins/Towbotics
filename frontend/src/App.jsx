@@ -16,15 +16,33 @@ function App() {
 
   const carouselImages = [
     {
-      src: '/towbot-front.png',
-      title: 'The Towbot',
-      description: 'Remote-controlled trailer positioning and powered jack system — the product you\'ll receive.'
+      src: '/towbot-attached.png',
+      title: 'Towbot — Installed on Your Trailer',
+      description: 'The production model mounts directly to your A-frame. This is what you\'ll receive.',
+      bg: '#f5f5f5',
+      textDark: true,
+    },
+    {
+      src: '/towbot-airstream.png',
+      title: 'Towbot — In Action',
+      description: 'Moves your trailer laterally with precision. Remote-controlled from a safe distance.',
+      bg: '#f5f5f5',
+      textDark: true,
     },
     {
       src: '/towbot-angle.png',
-      title: 'Towbot — Full System View',
-      description: 'Track drive system with integrated powered linear actuator. Installs in under 60 minutes, no truck or trailer modifications required.'
-    }
+      title: 'Track Drive System',
+      description: 'Four-track drive with integrated powered linear actuator. Installs in under 60 minutes — no trailer modifications required.',
+      bg: '#000000',
+      textDark: false,
+    },
+    {
+      src: '/towbot-front.png',
+      title: 'Towbot — Production Model',
+      description: 'Precision-machined aluminium and steel. Shipping second half of 2026.',
+      bg: '#000000',
+      textDark: false,
+    },
   ];
 
   const nextSlide = () => {
@@ -282,8 +300,8 @@ function App() {
             onMouseEnter={() => setIsCarouselHovered(true)}
             onMouseLeave={() => setIsCarouselHovered(false)}
           >
-            <div className="relative h-[500px] md:h-[700px] overflow-hidden" style={{
-              background: '#000000'
+            <div className="relative h-[500px] md:h-[700px] overflow-hidden transition-colors duration-700" style={{
+              background: carouselImages[currentSlide].bg
             }}>
               {/* Carousel Images */}
               <div className="relative w-full h-full">
@@ -327,13 +345,24 @@ function App() {
                 </svg>
               </button>
 
+              {/* Production Model badge */}
+              <div className="absolute top-4 left-4 z-10">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-amber-500 text-slate-900 text-xs font-black rounded-full uppercase tracking-wider shadow-lg">
+                  Production Model
+                </span>
+              </div>
+
               {/* Image Info Overlay */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900/95 via-slate-900/80 to-transparent px-8 md:px-16 py-8 md:py-12 pt-32">
+              <div className={`absolute bottom-0 left-0 right-0 px-8 md:px-16 py-8 md:py-12 pt-32 transition-all duration-700 ${
+                carouselImages[currentSlide].textDark
+                  ? 'bg-gradient-to-t from-white/95 via-white/70 to-transparent'
+                  : 'bg-gradient-to-t from-slate-900/95 via-slate-900/80 to-transparent'
+              }`}>
                 <div className="max-w-6xl mx-auto">
-                  <h3 className="text-2xl md:text-4xl font-bold text-white mb-2 md:mb-3 transition-all duration-500">
+                  <h3 className={`text-2xl md:text-4xl font-bold mb-2 md:mb-3 transition-all duration-500 ${carouselImages[currentSlide].textDark ? 'text-slate-800' : 'text-white'}`}>
                     {carouselImages[currentSlide].title}
                   </h3>
-                  <p className="text-slate-300 text-base md:text-lg max-w-3xl transition-all duration-500">
+                  <p className={`text-base md:text-lg max-w-3xl transition-all duration-500 ${carouselImages[currentSlide].textDark ? 'text-slate-600' : 'text-slate-300'}`}>
                     {carouselImages[currentSlide].description}
                   </p>
                 </div>
@@ -546,7 +575,7 @@ function App() {
               Get in touch.
             </h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              No payment required. Share your email and we'll contact you when TowBotics is ready. Reserve your spot in line — when ordering opens, you'll pick options and finalize your system.
+              No payment required. Share your email and we'll reach out when your <strong>Production Model</strong> Towbot is ready to order. Shipping second half of 2026.
             </p>
           </div>
 
