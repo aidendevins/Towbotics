@@ -16,34 +16,14 @@ function App() {
 
   const carouselImages = [
     {
-      src: '/Full System Close .png',
-      title: 'Integrated Assembly',
-      description: 'Complete view showing all components working together'
+      src: '/towbot-front.png',
+      title: 'The Towbot',
+      description: 'Remote-controlled trailer positioning and powered jack system — the product you\'ll receive.'
     },
     {
-      src: '/System Drive Train.png',
-      title: 'Drivetrain & Track System',
-      description: 'Four independent motors with differential drive for precise lateral positioning'
-    },
-    {
-      src: '/System Linear Actuator .png',
-      title: 'Powered Linear Actuator',
-      description: '22-inch stroke, 650 lbs tongue weight capacity, zero manual cranking'
-    },
-    {
-      src: '/System Bolt Onto A- Frame.png',
-      title: 'A-Frame Mount Detail',
-      description: 'Precision engineered mounting through standard A-frame opening'
-    },
-    {
-      src: '/System Screw On post bolting on.png',
-      title: 'Base Installation',
-      description: 'Secure mounting plate installation with basic hand tools'
-    },
-    {
-      src: '/System Superwide View with full trailer (too big).png',
-      title: 'Complete TowBotics System',
-      description: 'Full integration on A-frame showing entire trailer setup'
+      src: '/towbot-angle.png',
+      title: 'Towbot — Full System View',
+      description: 'Track drive system with integrated powered linear actuator. Installs in under 60 minutes, no truck or trailer modifications required.'
     }
   ];
 
@@ -303,7 +283,7 @@ function App() {
             onMouseLeave={() => setIsCarouselHovered(false)}
           >
             <div className="relative h-[500px] md:h-[700px] overflow-hidden" style={{
-              background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)'
+              background: '#000000'
             }}>
               {/* Carousel Images */}
               <div className="relative w-full h-full">
@@ -321,10 +301,6 @@ function App() {
                         src={image.src}
                         alt={image.title}
                         className="max-w-full max-h-full object-contain"
-                        style={{
-                          WebkitMaskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)',
-                          maskImage: 'linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%)'
-                        }}
                       />
                     </div>
                   </div>
