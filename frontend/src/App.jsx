@@ -199,9 +199,6 @@ function App() {
                 Watch Demo
             </button>
             </div>
-            <p className="text-slate-500 text-sm">
-              Trusted by Forest River · The largest travel trailer manufacturer in the U.S.
-            </p>
           </div>
 
           {/* Product Video */}
