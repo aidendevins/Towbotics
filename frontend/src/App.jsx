@@ -183,7 +183,7 @@ function App() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-              The first remote-controlled trailer positioning system that eliminates the physical strain, precision difficulty, and injury risk of manual hitching.
+              A remote-controlled positioning system that mounts permanently to your trailer, retracts for the road, and is ready to hitch wherever your travels take you — no setup, no help needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <button 
