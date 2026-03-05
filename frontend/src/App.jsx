@@ -206,6 +206,26 @@ function App() {
 
           {/* Product Video */}
           <div id="demo-video">
+            {/* Section label */}
+            <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-3 mb-6">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-amber-500 mb-1">Working Prototype</p>
+                <h2 className="text-3xl md:text-5xl font-black text-slate-800 leading-tight">
+                  See it in action.
+                </h2>
+              </div>
+              <a
+                href="#features"
+                onClick={(e) => { e.preventDefault(); document.getElementById('features')?.scrollIntoView({ behavior: 'smooth', block: 'start' }); }}
+                className="inline-flex items-center gap-2 px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-900 font-bold rounded-xl transition-all hover:scale-105 shadow-md text-sm whitespace-nowrap self-start sm:self-auto"
+              >
+                See our Production Model
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
+              </a>
+            </div>
+
             <div className="relative aspect-video rounded-3xl overflow-hidden shadow-2xl border border-slate-700 bg-slate-900">
               <iframe
                 className="absolute inset-0 w-full h-full"
