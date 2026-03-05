@@ -281,16 +281,34 @@ export default function Admin() {
                         <th className="p-3 font-medium text-slate-400">Email</th>
                         <th className="p-3 font-medium text-slate-400">Name</th>
                         <th className="p-3 font-medium text-slate-400">Phone</th>
+                        <th className="p-3 font-medium text-slate-400">Status</th>
+                        <th className="p-3 font-medium text-slate-400"></th>
                       </tr>
                     </thead>
                     <tbody>
-                      {contacts.map((c, i) => (
-                        <tr key={i} className="border-b border-slate-700/30 hover:bg-slate-800/40 transition">
-                          <td className="p-3 text-slate-400 whitespace-nowrap">{new Date(c.timestamp).toLocaleString()}</td>
-                          <td className="p-3 text-amber-400 font-medium">{c.email}</td>
-                          <td className="p-3 text-slate-300">{[c.firstName, c.lastName].filter(Boolean).join(' ') || '—'}</td>
-                          <td className="p-3 text-slate-300">{c.phone || '—'}</td>
-                        </tr>
+                      {contacts.map((c) => (
+                        <ContactRow
+                          key={c.id}
+                          contact={c}
+                          onStatusChange={(id, status) => {
+                            fetch(`${API_URL}/admin/contacts/${id}`, {
+                              method: 'PATCH',
+                              headers: { 'Content-Type': 'application/json', Authorization: 'Bearer 0612' },
+                              body: JSON.stringify({ status }),
+                            }).then(() => {
+                              setContacts((prev) => prev.map((x) => x.id === id ? { ...x, status } : x));
+                            });
+                          }}
+                          onDelete={(id) => {
+                            if (!confirm('Delete this contact?')) return;
+                            fetch(`${API_URL}/admin/contacts/${id}`, {
+                              method: 'DELETE',
+                              headers: { Authorization: 'Bearer 0612' },
+                            }).then(() => {
+                              setContacts((prev) => prev.filter((x) => x.id !== id));
+                            });
+                          }}
+                        />
                       ))}
                     </tbody>
                   </table>
@@ -524,5 +542,47 @@ export default function Admin() {
         )}
       </main>
     </div>
+  );
+}
+
+const STATUS_OPTIONS = [
+  { value: 'new', label: 'New', color: 'bg-blue-500/20 text-blue-300 border-blue-500/30' },
+  { value: 'emailed', label: 'Emailed', color: 'bg-amber-500/20 text-amber-300 border-amber-500/30' },
+  { value: 'complete', label: 'Complete', color: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30' },
+  { value: 'not_interested', label: 'Not Interested', color: 'bg-slate-500/20 text-slate-400 border-slate-500/30' },
+];
+
+function ContactRow({ contact: c, onStatusChange, onDelete }) {
+  const current = STATUS_OPTIONS.find((s) => s.value === (c.status || 'new')) || STATUS_OPTIONS[0];
+
+  return (
+    <tr className="border-b border-slate-700/30 hover:bg-slate-800/40 transition group">
+      <td className="p-3 text-slate-400 whitespace-nowrap">{new Date(c.timestamp).toLocaleString()}</td>
+      <td className="p-3 text-amber-400 font-medium">{c.email}</td>
+      <td className="p-3 text-slate-300">{[c.firstName, c.lastName].filter(Boolean).join(' ') || '—'}</td>
+      <td className="p-3 text-slate-300">{c.phone || '—'}</td>
+      <td className="p-3">
+        <select
+          value={c.status || 'new'}
+          onChange={(e) => onStatusChange(c.id, e.target.value)}
+          className={`text-xs font-semibold px-2 py-1 rounded-lg border bg-transparent cursor-pointer focus:outline-none ${current.color}`}
+        >
+          {STATUS_OPTIONS.map((s) => (
+            <option key={s.value} value={s.value} className="bg-slate-800 text-white">
+              {s.label}
+            </option>
+          ))}
+        </select>
+      </td>
+      <td className="p-3">
+        <button
+          onClick={() => onDelete(c.id)}
+          className="opacity-0 group-hover:opacity-100 transition text-slate-500 hover:text-red-400 text-xs px-2 py-1 rounded hover:bg-red-400/10"
+          title="Delete contact"
+        >
+          Delete
+        </button>
+      </td>
+    </tr>
   );
 }

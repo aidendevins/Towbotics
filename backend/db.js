@@ -38,8 +38,14 @@ async function initDB() {
         first_name VARCHAR(100),
         last_name VARCHAR(100),
         phone VARCHAR(50),
+        status VARCHAR(50) DEFAULT 'new',
         timestamp TIMESTAMPTZ DEFAULT NOW()
       )
+    `);
+
+    // Add status column if table already exists without it
+    await client.query(`
+      ALTER TABLE contacts ADD COLUMN IF NOT EXISTS status VARCHAR(50) DEFAULT 'new'
     `);
 
     console.log('✅ Database tables initialized');

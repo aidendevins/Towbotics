@@ -154,21 +154,53 @@ router.post('/reservation', async (req, res) => {
   });
 });
 
-// Admin: get all contacts (password protected)
+// Admin: get all contacts
 router.get('/admin/contacts', async (req, res) => {
   const auth = req.headers.authorization;
-  if (auth !== 'Bearer 0612') {
-    return res.status(401).json({ error: 'Unauthorized' });
-  }
+  if (auth !== 'Bearer 0612') return res.status(401).json({ error: 'Unauthorized' });
 
   try {
     const result = await pool.query(
-      'SELECT id, email, first_name AS "firstName", last_name AS "lastName", phone, timestamp FROM contacts ORDER BY timestamp DESC'
+      'SELECT id, email, first_name AS "firstName", last_name AS "lastName", phone, status, timestamp FROM contacts ORDER BY timestamp DESC'
     );
     res.json({ contacts: result.rows });
   } catch (err) {
     console.error('Error fetching contacts:', err);
     res.status(500).json({ error: 'Failed to fetch contacts' });
+  }
+});
+
+// Admin: update contact status
+router.patch('/admin/contacts/:id', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== 'Bearer 0612') return res.status(401).json({ error: 'Unauthorized' });
+
+  const { id } = req.params;
+  const { status } = req.body;
+  const allowed = ['new', 'emailed', 'complete', 'not_interested'];
+  if (!allowed.includes(status)) return res.status(400).json({ error: 'Invalid status' });
+
+  try {
+    await pool.query('UPDATE contacts SET status = $1 WHERE id = $2', [status, id]);
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Error updating contact:', err);
+    res.status(500).json({ error: 'Failed to update contact' });
+  }
+});
+
+// Admin: delete a contact
+router.delete('/admin/contacts/:id', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== 'Bearer 0612') return res.status(401).json({ error: 'Unauthorized' });
+
+  const { id } = req.params;
+  try {
+    await pool.query('DELETE FROM contacts WHERE id = $1', [id]);
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('Error deleting contact:', err);
+    res.status(500).json({ error: 'Failed to delete contact' });
   }
 });
 
