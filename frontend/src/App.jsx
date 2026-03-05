@@ -240,46 +240,6 @@ function App() {
         </div>
       </section>
 
-      {/* Problem Statement Section */}
-      <section className="py-20 bg-white">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
-              Hitching shouldn't be<br />
-              <span className="text-amber-600">this hard.</span>
-            </h2>
-            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
-              Manual hitching is physically demanding, time-consuming, and dangerous. For some RV owners, it's often the reason they stop traveling—or sell their trailer entirely.
-            </p>
-        </div>
-
-          <div className="grid md:grid-cols-3 gap-8 mb-16">
-            <PainPointCard
-              image="/Remote Control 2.png"
-              title="No More Heavy Lifting"
-              description="Control everything from your remote. No cranking, no bending, no struggling with tongue weight—the powered jack does the work."
-              />
-            <PainPointCard
-              image="/System Linear Actuator .png"
-              title="Easy Alignment"
-              description="Move your trailer in precise increments with the push of a button. See it line up perfectly from a safe distance, every time."
-            />
-            <PainPointCard
-              image="/Full System Close .png"
-              title="Hitch from a Safe Distance"
-              description="Stay out of the danger zone. Control the entire hitching process from where you can see everything clearly."
-          />
-        </div>
-
-          <div className="bg-slate-50 rounded-2xl p-8 border-2 border-slate-200 max-w-3xl mx-auto">
-            <p className="text-slate-700 text-lg mb-4 italic">
-              "Hitching difficulty is the most common complaint we hear, especially from older and inexperienced users. Some elderly owners have sold their trailers because hitching became too physically demanding."
-            </p>
-            <p className="font-semibold text-slate-800">— What we heard in 100+ RV owner interviews</p>
-          </div>
-        </div>
-      </section>
-
       {/* Solution Section */}
       <section id="features" className="py-20 bg-slate-800">
         <div className="container mx-auto px-6 max-w-6xl">
@@ -402,6 +362,46 @@ function App() {
                 />
               ))}
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Problem Statement Section */}
+      <section className="py-20 bg-white">
+        <div className="container mx-auto px-6 max-w-6xl">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-slate-800 mb-6">
+              Hitching shouldn't be<br />
+              <span className="text-amber-600">this hard.</span>
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto">
+              Manual hitching is physically demanding, time-consuming, and dangerous. For some RV owners, it's often the reason they stop traveling—or sell their trailer entirely.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <PainPointCard
+              image="/Remote Control 2.png"
+              title="No More Heavy Lifting"
+              description="Control everything from your remote. No cranking, no bending, no struggling with tongue weight—the powered jack does the work."
+            />
+            <PainPointCard
+              image="/System Linear Actuator .png"
+              title="Easy Alignment"
+              description="Move your trailer in precise increments with the push of a button. See it line up perfectly from a safe distance, every time."
+            />
+            <PainPointCard
+              image="/Full System Close .png"
+              title="Hitch from a Safe Distance"
+              description="Stay out of the danger zone. Control the entire hitching process from where you can see everything clearly."
+            />
+          </div>
+
+          <div className="bg-slate-50 rounded-2xl p-8 border-2 border-slate-200 max-w-3xl mx-auto">
+            <p className="text-slate-700 text-lg mb-4 italic">
+              "Hitching difficulty is the most common complaint we hear, especially from older and inexperienced users. Some elderly owners have sold their trailers because hitching became too physically demanding."
+            </p>
+            <p className="font-semibold text-slate-800">— What we heard in 100+ RV owner interviews</p>
           </div>
         </div>
       </section>
