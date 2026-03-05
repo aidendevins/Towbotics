@@ -39,7 +39,7 @@ function App() {
     {
       src: '/towbot-front.png',
       title: 'The Towbot — Production Model',
-      description: 'This is the product you\'ll receive. Starting at $7,500. Shipping second half of 2026 — get in touch to reserve your spot.',
+      description: 'This is the product you\'ll receive. Starting at $5,000. Shipping second half of 2026 — get in touch to reserve your spot.',
       bg: '#000000',
       textDark: false,
     },
@@ -86,7 +86,7 @@ function App() {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselImages.length);
-    }, 7500);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, [isCarouselHovered, carouselImages.length]);
@@ -566,7 +566,7 @@ function App() {
               <div className="text-white">
                 <p className="text-slate-300 text-sm font-semibold mb-2">STARTING AT</p>
                 <h3 className="text-5xl md:text-6xl font-black mb-4">
-                  $7,500
+                  $5,000
                 </h3>
                 <p className="text-slate-300 mb-6">
                   Final price depends on your configuration and installation options. Reserve now to lock in early pricing.
