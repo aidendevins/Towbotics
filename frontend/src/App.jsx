@@ -183,7 +183,7 @@ function App() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-              A remote-controlled positioning system that mounts permanently to your trailer, retracts for the road, and is ready to hitch wherever your travels take you — no setup, no help needed.
+              Permanently mounted to your trailer, it travels with you and drives itself to the hitch — eliminating physical strain, precision difficulty, and injury risk. Easier in tight spaces. Retracts for the road. No help needed.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <button 
