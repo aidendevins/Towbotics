@@ -301,6 +301,7 @@ export default function Admin() {
         )}
 
         {activeTab === 'analytics' && (
+        <div>
         {/* KPI cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
@@ -518,6 +519,7 @@ export default function Admin() {
               </section>
             </div>
           )}
+        </div>
         </div>
         )}
       </main>
