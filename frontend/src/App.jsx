@@ -291,12 +291,6 @@ function App() {
             />
           </div>
 
-          <div className="bg-slate-50 rounded-2xl p-8 border-2 border-slate-200 max-w-3xl mx-auto">
-            <p className="text-slate-700 text-lg mb-4 italic">
-              "Hitching difficulty is the most common complaint we hear, especially from older and inexperienced users. Some elderly owners have sold their trailers because hitching became too physically demanding."
-            </p>
-            <p className="font-semibold text-slate-800">— What we heard in 100+ RV owner interviews</p>
-          </div>
         </div>
       </section>
 
