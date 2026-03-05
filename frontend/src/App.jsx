@@ -310,8 +310,8 @@ function App() {
               description="Four independent motors and differential drive let you move your trailer laterally with millimeter precision. Full 360° steering. Works on grass, gravel, asphalt, and up to 5% grade. Command-to-motion latency under 150ms."
             />
             <FeatureBlock
-              title="Powered Jack"
-              description="Integrated linear actuator raises and lowers tongue weight up to 650 lbs. 22-inch stroke covers all standard hitch heights. No manual cranking. No physical strain."
+              title="Lifts, Lowers & Retracts — Fully"
+              description="The integrated powered jack raises and lowers up to 650 lbs of tongue weight across all standard hitch heights — no cranking, no strain. When you're done, it fully retracts to road clearance and stays on the trailer, so it travels with you everywhere, always ready."
             />
             <FeatureBlock
               title="Built-In Safety"
