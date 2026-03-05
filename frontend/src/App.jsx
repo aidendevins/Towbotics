@@ -272,12 +272,12 @@ function App() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <PainPointCard
-              image="/System Linear Actuator .png"
+              image="/Full System Close .png"
               title="Hitch Completely Solo"
               description="No spotter, no second person, no waiting for help. Drive your trailer to the hitch yourself — from the remote, on your own timeline, every single time."
             />
             <PainPointCard
-              image="/Full System Close .png"
+              image="/System Linear Actuator .png"
               title="Works Anywhere You Park"
               description="Tight campground, crowded parking lot, narrow driveway — it doesn't matter. Permanently mounted to your trailer, it goes wherever you do and handles any space."
             />
