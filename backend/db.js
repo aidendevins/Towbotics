@@ -31,6 +31,17 @@ async function initDB() {
       )
     `);
 
+    await client.query(`
+      CREATE TABLE IF NOT EXISTS contacts (
+        id SERIAL PRIMARY KEY,
+        email VARCHAR(255) NOT NULL,
+        first_name VARCHAR(100),
+        last_name VARCHAR(100),
+        phone VARCHAR(50),
+        timestamp TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
+
     console.log('✅ Database tables initialized');
   } catch (err) {
     console.error('Database init error:', err);

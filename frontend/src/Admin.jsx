@@ -81,8 +81,10 @@ export default function Admin() {
   const [error, setError] = useState('');
   const [pageViews, setPageViews] = useState([]);
   const [events, setEvents] = useState([]);
+  const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showTables, setShowTables] = useState(false);
+  const [activeTab, setActiveTab] = useState('analytics');
 
   const chartData = useChartData(pageViews, events);
 
@@ -95,20 +97,21 @@ export default function Admin() {
   useEffect(() => {
     if (!authenticated) return;
     setLoading(true);
-    fetch(`${API_URL}/admin/analytics`, {
-      headers: { Authorization: 'Bearer 0612' },
-    })
-      .then((res) => {
-        if (res.status === 401) {
+    Promise.all([
+      fetch(`${API_URL}/admin/analytics`, { headers: { Authorization: 'Bearer 0612' } }),
+      fetch(`${API_URL}/admin/contacts`, { headers: { Authorization: 'Bearer 0612' } }),
+    ])
+      .then(async ([analyticsRes, contactsRes]) => {
+        if (analyticsRes.status === 401) {
           sessionStorage.removeItem('adminAuth');
           setAuthenticated(false);
           throw new Error('Session expired');
         }
-        return res.json();
-      })
-      .then((data) => {
-        setPageViews(data.pageViews || []);
-        setEvents(data.events || []);
+        const analyticsData = await analyticsRes.json();
+        const contactsData = await contactsRes.json();
+        setPageViews(analyticsData.pageViews || []);
+        setEvents(analyticsData.events || []);
+        setContacts(contactsData.contacts || []);
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
@@ -133,13 +136,16 @@ export default function Admin() {
 
   const refreshData = () => {
     setLoading(true);
-    fetch(`${API_URL}/admin/analytics`, {
-      headers: { Authorization: 'Bearer 0612' },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setPageViews(data.pageViews || []);
-        setEvents(data.events || []);
+    Promise.all([
+      fetch(`${API_URL}/admin/analytics`, { headers: { Authorization: 'Bearer 0612' } }),
+      fetch(`${API_URL}/admin/contacts`, { headers: { Authorization: 'Bearer 0612' } }),
+    ])
+      .then(async ([analyticsRes, contactsRes]) => {
+        const analyticsData = await analyticsRes.json();
+        const contactsData = await contactsRes.json();
+        setPageViews(analyticsData.pageViews || []);
+        setEvents(analyticsData.events || []);
+        setContacts(contactsData.contacts || []);
       })
       .finally(() => setLoading(false));
   };
@@ -182,8 +188,8 @@ export default function Admin() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">Analytics</h1>
-              <p className="text-slate-400 text-sm mt-0.5">Page views, reserve clicks, and traffic</p>
+              <h1 className="text-2xl font-bold tracking-tight">TowBotics Admin</h1>
+              <p className="text-slate-400 text-sm mt-0.5">Analytics, traffic, and contact submissions</p>
             </div>
             <div className="flex items-center gap-2">
               <button
@@ -201,10 +207,100 @@ export default function Admin() {
               </button>
             </div>
           </div>
+          {/* Tabs */}
+          <div className="flex gap-1 mt-4">
+            <button
+              onClick={() => setActiveTab('analytics')}
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition ${activeTab === 'analytics' ? 'bg-amber-500 text-slate-900' : 'text-slate-400 hover:text-white hover:bg-slate-700'}`}
+            >
+              Analytics
+            </button>
+            <button
+              onClick={() => setActiveTab('contacts')}
+              className={`px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2 ${activeTab === 'contacts' ? 'bg-amber-500 text-slate-900' : 'text-slate-400 hover:text-white hover:bg-slate-700'}`}
+            >
+              Contacts
+              {contacts.length > 0 && (
+                <span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${activeTab === 'contacts' ? 'bg-slate-900/30 text-slate-900' : 'bg-emerald-500 text-white'}`}>
+                  {contacts.length}
+                </span>
+              )}
+            </button>
+          </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {activeTab === 'contacts' && (
+          <div>
+            {/* Contacts KPI */}
+            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+              <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
+                <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Total Contacts</p>
+                <p className="text-2xl font-bold mt-1 text-emerald-400">{contacts.length}</p>
+                <p className="text-slate-500 text-xs mt-1">Form submissions</p>
+              </div>
+              <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
+                <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">With Phone</p>
+                <p className="text-2xl font-bold mt-1 text-amber-400">{contacts.filter(c => c.phone).length}</p>
+                <p className="text-slate-500 text-xs mt-1">Provided phone number</p>
+              </div>
+              <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
+                <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Latest</p>
+                <p className="text-2xl font-bold mt-1 text-cyan-400">
+                  {contacts.length > 0 ? new Date(contacts[0].timestamp).toLocaleDateString() : '—'}
+                </p>
+                <p className="text-slate-500 text-xs mt-1">Most recent submission</p>
+              </div>
+            </div>
+
+            {/* Contacts Table */}
+            <div className="bg-slate-800/50 rounded-xl border border-slate-700/50 overflow-hidden">
+              <div className="px-5 py-4 border-b border-slate-700/50 flex items-center justify-between">
+                <h2 className="text-sm font-semibold text-slate-300">All Contact Submissions</h2>
+                {contacts.length > 0 && (
+                  <button
+                    onClick={() => {
+                      const emails = contacts.map(c => c.email).join('\n');
+                      navigator.clipboard.writeText(emails);
+                    }}
+                    className="text-xs px-3 py-1.5 bg-slate-700 hover:bg-slate-600 rounded-lg text-slate-300 transition"
+                  >
+                    Copy all emails
+                  </button>
+                )}
+              </div>
+              {contacts.length === 0 ? (
+                <p className="p-8 text-slate-500 text-sm text-center">No contact submissions yet.</p>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table className="w-full text-left text-sm">
+                    <thead>
+                      <tr className="border-b border-slate-700 bg-slate-800/50">
+                        <th className="p-3 font-medium text-slate-400">Date</th>
+                        <th className="p-3 font-medium text-slate-400">Email</th>
+                        <th className="p-3 font-medium text-slate-400">Name</th>
+                        <th className="p-3 font-medium text-slate-400">Phone</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {contacts.map((c, i) => (
+                        <tr key={i} className="border-b border-slate-700/30 hover:bg-slate-800/40 transition">
+                          <td className="p-3 text-slate-400 whitespace-nowrap">{new Date(c.timestamp).toLocaleString()}</td>
+                          <td className="p-3 text-amber-400 font-medium">{c.email}</td>
+                          <td className="p-3 text-slate-300">{[c.firstName, c.lastName].filter(Boolean).join(' ') || '—'}</td>
+                          <td className="p-3 text-slate-300">{c.phone || '—'}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'analytics' && (
         {/* KPI cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
@@ -423,6 +519,7 @@ export default function Admin() {
             </div>
           )}
         </div>
+        )}
       </main>
     </div>
   );

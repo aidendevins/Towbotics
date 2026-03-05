@@ -131,31 +131,45 @@ router.post('/demo', (req, res) => {
 });
 
 // Reservation / contact endpoint (no payment — we contact them)
-router.post('/reservation', (req, res) => {
+router.post('/reservation', async (req, res) => {
   const { email, firstName, lastName, phone } = req.body;
-  
+
   if (!email || !email.trim()) {
-    return res.status(400).json({
-      error: 'Email is required'
-    });
+    return res.status(400).json({ error: 'Email is required' });
   }
 
-  // TODO: In production, save to database and add to CRM/email list
-  
-  console.log('Contact / reservation received:', { 
-    email: email.trim(), 
-    firstName: (firstName || '').trim(), 
-    lastName: (lastName || '').trim(), 
-    phone: (phone || '').trim(),
-    timestamp: new Date().toISOString()
-  });
-  
+  try {
+    await pool.query(
+      'INSERT INTO contacts (email, first_name, last_name, phone) VALUES ($1, $2, $3, $4)',
+      [email.trim(), (firstName || '').trim(), (lastName || '').trim(), (phone || '').trim()]
+    );
+  } catch (err) {
+    console.error('Error saving contact:', err);
+  }
+
   res.json({
     success: true,
     message: "Thanks! We'll be in touch soon.",
-    reservationId: `RES-${Date.now()}`,
     timestamp: new Date().toISOString()
   });
+});
+
+// Admin: get all contacts (password protected)
+router.get('/admin/contacts', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== 'Bearer 0612') {
+    return res.status(401).json({ error: 'Unauthorized' });
+  }
+
+  try {
+    const result = await pool.query(
+      'SELECT id, email, first_name AS "firstName", last_name AS "lastName", phone, timestamp FROM contacts ORDER BY timestamp DESC'
+    );
+    res.json({ contacts: result.rows });
+  } catch (err) {
+    console.error('Error fetching contacts:', err);
+    res.status(500).json({ error: 'Failed to fetch contacts' });
+  }
 });
 
 module.exports = router;
