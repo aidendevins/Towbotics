@@ -318,7 +318,7 @@ function App() {
               description="The remote has a hold-to-operate switch — the system only moves while you're actively pressing it. The instant you release, drop the remote, or lose connection, everything stops dead. No runaway trailer, no accidental movement, ever."
             />
             <FeatureBlock
-              title="Retrofit Installation"
+              title="Replaces Your Existing Jack"
               description="Replaces your existing tongue jack. Installs through standard A-frame opening in under 60 minutes with basic hand tools. No modifications to your truck or trailer frame. Remains attached during towing."
             />
           </div>
