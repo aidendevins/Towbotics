@@ -399,6 +399,7 @@ export default function Admin() {
         <div className="grid lg:grid-cols-2 gap-6 mb-8">
           <div className="bg-slate-800/50 rounded-xl border border-slate-700/50 p-5">
             <h2 className="text-sm font-semibold text-slate-300 mb-4">Top pages (by views)</h2>
+
             {chartData.topPaths.length === 0 ? (
               <p className="text-slate-500 text-sm h-[220px] flex items-center justify-center">No data yet</p>
             ) : (
@@ -455,6 +456,41 @@ export default function Admin() {
           </div>
         </div>
 
+        {/* Visitor Locations */}
+        {(() => {
+          const locationCounts = {};
+          pageViews.forEach((v) => {
+            if (v.country) {
+              const key = v.city ? `${v.city}, ${v.country}` : v.country;
+              locationCounts[key] = (locationCounts[key] || 0) + 1;
+            }
+          });
+          const topLocations = Object.entries(locationCounts)
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10)
+            .map(([location, count]) => ({ location, count }));
+
+          return topLocations.length > 0 ? (
+            <div className="bg-slate-800/50 rounded-xl border border-slate-700/50 p-5 mb-8">
+              <h2 className="text-sm font-semibold text-slate-300 mb-4">Visitor locations</h2>
+              <div className="space-y-2">
+                {topLocations.map(({ location, count }, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="text-slate-400 text-sm w-48 truncate">{location}</span>
+                    <div className="flex-1 bg-slate-700/50 rounded-full h-2 overflow-hidden">
+                      <div
+                        className="h-2 rounded-full bg-amber-500"
+                        style={{ width: `${(count / topLocations[0].count) * 100}%` }}
+                      />
+                    </div>
+                    <span className="text-slate-300 text-sm font-medium w-8 text-right">{count}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null;
+        })()}
+
         {/* Detail tables (collapsible) */}
         <div className="border border-slate-700/50 rounded-xl overflow-hidden bg-slate-800/30">
           <button
@@ -478,6 +514,7 @@ export default function Admin() {
                         <tr className="border-b border-slate-700 bg-slate-800/50">
                           <th className="p-3 font-medium text-slate-400">Time</th>
                           <th className="p-3 font-medium text-slate-400">Path</th>
+                          <th className="p-3 font-medium text-slate-400">Location</th>
                           <th className="p-3 font-medium text-slate-400">IP</th>
                           <th className="p-3 font-medium text-slate-400 hidden md:table-cell">User agent</th>
                           <th className="p-3 font-medium text-slate-400 hidden lg:table-cell">Referrer</th>
@@ -488,6 +525,7 @@ export default function Admin() {
                           <tr key={i} className="border-b border-slate-700/30">
                             <td className="p-3 text-slate-300">{new Date(v.timestamp).toLocaleString()}</td>
                             <td className="p-3">{v.path || '/'}</td>
+                            <td className="p-3 text-slate-300">{v.city && v.country ? `${v.city}, ${v.country}` : v.country || '—'}</td>
                             <td className="p-3 font-mono text-amber-400/90">{v.ip}</td>
                             <td className="p-3 text-slate-500 hidden md:table-cell max-w-xs truncate" title={v.userAgent}>{v.userAgent}</td>
                             <td className="p-3 text-slate-500 hidden lg:table-cell max-w-xs truncate" title={v.referrer}>{v.referrer || '—'}</td>

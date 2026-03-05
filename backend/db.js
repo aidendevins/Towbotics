@@ -16,9 +16,15 @@ async function initDB() {
         referrer TEXT,
         ip VARCHAR(100),
         user_agent TEXT,
+        country VARCHAR(100),
+        city VARCHAR(100),
         timestamp TIMESTAMPTZ DEFAULT NOW()
       )
     `);
+
+    // Add location columns if table already exists without them
+    await client.query(`ALTER TABLE page_views ADD COLUMN IF NOT EXISTS country VARCHAR(100)`);
+    await client.query(`ALTER TABLE page_views ADD COLUMN IF NOT EXISTS city VARCHAR(100)`);
 
     await client.query(`
       CREATE TABLE IF NOT EXISTS events (

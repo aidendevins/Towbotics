@@ -1,11 +1,18 @@
 const express = require('express');
 const router = express.Router();
 const { pool } = require('../db');
+const geoip = require('geoip-lite');
 
-const getClientInfo = (req) => ({
-  ip: req.ip || req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.connection?.remoteAddress || 'unknown',
-  userAgent: req.headers['user-agent'] || '',
-});
+const getClientInfo = (req) => {
+  const ip = req.headers['x-forwarded-for']?.split(',')[0]?.trim() || req.ip || req.connection?.remoteAddress || 'unknown';
+  const geo = geoip.lookup(ip);
+  return {
+    ip,
+    userAgent: req.headers['user-agent'] || '',
+    country: geo?.country || '',
+    city: geo?.city || '',
+  };
+};
 
 // Log page view (called by frontend on load)
 router.post('/analytics/view', async (req, res) => {
@@ -14,8 +21,8 @@ router.post('/analytics/view', async (req, res) => {
   
   try {
     await pool.query(
-      'INSERT INTO page_views (path, referrer, ip, user_agent) VALUES ($1, $2, $3, $4)',
-      [path, referrer, info.ip, info.userAgent]
+      'INSERT INTO page_views (path, referrer, ip, user_agent, country, city) VALUES ($1, $2, $3, $4, $5, $6)',
+      [path, referrer, info.ip, info.userAgent, info.country, info.city]
     );
     res.json({ ok: true });
   } catch (err) {
@@ -50,7 +57,7 @@ router.get('/admin/analytics', async (req, res) => {
 
   try {
     const viewsResult = await pool.query(
-      'SELECT path, referrer, ip, user_agent AS "userAgent", timestamp FROM page_views ORDER BY timestamp DESC'
+      'SELECT path, referrer, ip, user_agent AS "userAgent", country, city, timestamp FROM page_views ORDER BY timestamp DESC'
     );
     const eventsResult = await pool.query(
       'SELECT event_name AS "eventName", path, ip, user_agent AS "userAgent", timestamp FROM events ORDER BY timestamp DESC'
