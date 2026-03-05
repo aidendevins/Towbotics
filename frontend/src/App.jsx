@@ -183,7 +183,7 @@ function App() {
               </span>
             </h1>
             <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Permanently mounted to your trailer, it travels with you and drives itself to the hitch — eliminating physical strain, precision difficulty, and injury risk. Easier in tight spaces. Retracts for the road. No help needed.
+              Remotely drive your trailer to the hitch — from anywhere. Permanently mounted so it travels with you everywhere, making hitching solo, safe, and effortless, even in the tightest spaces.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <button 
