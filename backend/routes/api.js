@@ -161,6 +161,45 @@ router.post('/reservation', async (req, res) => {
   });
 });
 
+// Admin: get blocked IPs
+router.get('/admin/blocked-ips', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== 'Bearer 0612') return res.status(401).json({ error: 'Unauthorized' });
+  try {
+    const result = await pool.query('SELECT ip, note, created_at AS "createdAt" FROM blocked_ips ORDER BY created_at DESC');
+    res.json({ blockedIps: result.rows });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch blocked IPs' });
+  }
+});
+
+// Admin: block an IP
+router.post('/admin/blocked-ips', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== 'Bearer 0612') return res.status(401).json({ error: 'Unauthorized' });
+  const { ip, note = '' } = req.body;
+  if (!ip) return res.status(400).json({ error: 'IP required' });
+  try {
+    await pool.query('INSERT INTO blocked_ips (ip, note) VALUES ($1, $2) ON CONFLICT (ip) DO NOTHING', [ip, note]);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to block IP' });
+  }
+});
+
+// Admin: unblock an IP
+router.delete('/admin/blocked-ips/:ip', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== 'Bearer 0612') return res.status(401).json({ error: 'Unauthorized' });
+  const ip = decodeURIComponent(req.params.ip);
+  try {
+    await pool.query('DELETE FROM blocked_ips WHERE ip = $1', [ip]);
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to unblock IP' });
+  }
+});
+
 // Admin: clear internal/test data from analytics
 router.delete('/admin/analytics/test-data', async (req, res) => {
   const auth = req.headers.authorization;

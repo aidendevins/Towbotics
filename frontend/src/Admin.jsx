@@ -109,9 +109,27 @@ export default function Admin() {
   const [showTables, setShowTables] = useState(false);
   const [activeTab, setActiveTab] = useState('analytics');
   const [locationFilter, setLocationFilter] = useState('');
+  const [blockedIps, setBlockedIps] = useState([]);
+
+  const blockedIpSet = useMemo(() => new Set(blockedIps.map(b => b.ip)), [blockedIps]);
+
+  const blockIp = (ip, note = '') => {
+    fetch(`${API_URL}/admin/blocked-ips`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Authorization: 'Bearer 0612' },
+      body: JSON.stringify({ ip, note }),
+    }).then(() => setBlockedIps(prev => [...prev.filter(b => b.ip !== ip), { ip, note, createdAt: new Date().toISOString() }]));
+  };
+
+  const unblockIp = (ip) => {
+    fetch(`${API_URL}/admin/blocked-ips/${encodeURIComponent(ip)}`, {
+      method: 'DELETE',
+      headers: { Authorization: 'Bearer 0612' },
+    }).then(() => setBlockedIps(prev => prev.filter(b => b.ip !== ip)));
+  };
 
   const filteredViews = useMemo(() => {
-    let views = pageViews.filter(v => !isInternalIp(v.ip));
+    let views = pageViews.filter(v => !isInternalIp(v.ip) && !blockedIpSet.has(v.ip));
     if (locationFilter) {
       views = views.filter(v => {
         const loc = v.city && v.country ? `${v.city}, ${v.country}` : v.country || '';
@@ -119,7 +137,7 @@ export default function Admin() {
       });
     }
     return views;
-  }, [pageViews, locationFilter]);
+  }, [pageViews, locationFilter, blockedIpSet]);
 
   const chartData = useChartData(filteredViews, events);
 
@@ -135,8 +153,9 @@ export default function Admin() {
     Promise.all([
       fetch(`${API_URL}/admin/analytics`, { headers: { Authorization: 'Bearer 0612' } }),
       fetch(`${API_URL}/admin/contacts`, { headers: { Authorization: 'Bearer 0612' } }),
+      fetch(`${API_URL}/admin/blocked-ips`, { headers: { Authorization: 'Bearer 0612' } }),
     ])
-      .then(async ([analyticsRes, contactsRes]) => {
+      .then(async ([analyticsRes, contactsRes, blockedRes]) => {
         if (analyticsRes.status === 401) {
           sessionStorage.removeItem('adminAuth');
           setAuthenticated(false);
@@ -144,9 +163,11 @@ export default function Admin() {
         }
         const analyticsData = await analyticsRes.json();
         const contactsData = await contactsRes.json();
+        const blockedData = await blockedRes.json();
         setPageViews(analyticsData.pageViews || []);
         setEvents(analyticsData.events || []);
         setContacts(contactsData.contacts || []);
+        setBlockedIps(blockedData.blockedIps || []);
       })
       .catch((err) => setError(err.message))
       .finally(() => setLoading(false));
@@ -174,13 +195,16 @@ export default function Admin() {
     Promise.all([
       fetch(`${API_URL}/admin/analytics`, { headers: { Authorization: 'Bearer 0612' } }),
       fetch(`${API_URL}/admin/contacts`, { headers: { Authorization: 'Bearer 0612' } }),
+      fetch(`${API_URL}/admin/blocked-ips`, { headers: { Authorization: 'Bearer 0612' } }),
     ])
-      .then(async ([analyticsRes, contactsRes]) => {
+      .then(async ([analyticsRes, contactsRes, blockedRes]) => {
         const analyticsData = await analyticsRes.json();
         const contactsData = await contactsRes.json();
+        const blockedData = await blockedRes.json();
         setPageViews(analyticsData.pageViews || []);
         setEvents(analyticsData.events || []);
         setContacts(contactsData.contacts || []);
+        setBlockedIps(blockedData.blockedIps || []);
       })
       .finally(() => setLoading(false));
   };
@@ -212,7 +236,7 @@ export default function Admin() {
     );
   }
 
-  const publicViews = pageViews.filter(v => !isInternalIp(v.ip));
+  const publicViews = pageViews.filter(v => !isInternalIp(v.ip) && !blockedIpSet.has(v.ip));
   const conversionRate = publicViews.length > 0
     ? Math.min(((events.length / publicViews.length) * 100), 100).toFixed(1)
     : '0';
@@ -602,6 +626,25 @@ export default function Admin() {
           ) : null;
         })()}
 
+        {/* Blocked IPs */}
+        {blockedIps.length > 0 && (
+          <div className="bg-slate-800/50 rounded-xl border border-slate-700/50 p-5 mb-8">
+            <h2 className="text-sm font-semibold text-slate-300 mb-3">Blocked IPs ({blockedIps.length})</h2>
+            <div className="flex flex-wrap gap-2">
+              {blockedIps.map((b) => (
+                <div key={b.ip} className="flex items-center gap-2 bg-red-900/20 border border-red-800/30 rounded-lg px-3 py-1.5">
+                  <span className="font-mono text-xs text-red-300">{b.ip}</span>
+                  <button
+                    onClick={() => unblockIp(b.ip)}
+                    className="text-slate-500 hover:text-white transition text-xs"
+                    title="Unblock"
+                  >✕</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         {/* Detail tables (collapsible) */}
         <div className="border border-slate-700/50 rounded-xl overflow-hidden bg-slate-800/30">
           <button
@@ -629,17 +672,25 @@ export default function Admin() {
                           <th className="p-3 font-medium text-slate-400">IP</th>
                           <th className="p-3 font-medium text-slate-400 hidden md:table-cell">User agent</th>
                           <th className="p-3 font-medium text-slate-400 hidden lg:table-cell">Referrer</th>
+                          <th className="p-3 font-medium text-slate-400"></th>
                         </tr>
                       </thead>
                       <tbody>
                         {[...pageViews].reverse().slice(0, 50).map((v, i) => (
-                          <tr key={i} className="border-b border-slate-700/30">
+                          <tr key={i} className="border-b border-slate-700/30 group">
                             <td className="p-3 text-slate-300">{new Date(v.timestamp).toLocaleString()}</td>
                             <td className="p-3">{v.path || '/'}</td>
                             <td className="p-3 text-slate-300">{v.city && v.country ? `${v.city}, ${v.country}` : v.country || '—'}</td>
                             <td className="p-3 font-mono text-amber-400/90">{v.ip}</td>
                             <td className="p-3 text-slate-500 hidden md:table-cell max-w-xs truncate" title={v.userAgent}>{v.userAgent}</td>
                             <td className="p-3 text-slate-500 hidden lg:table-cell max-w-xs truncate" title={v.referrer}>{v.referrer || '—'}</td>
+                            <td className="p-3">
+                              {blockedIpSet.has(v.ip) ? (
+                                <button onClick={() => unblockIp(v.ip)} className="text-xs text-emerald-400 hover:text-emerald-300 px-2 py-1 rounded hover:bg-emerald-400/10 transition whitespace-nowrap">Unblock</button>
+                              ) : (
+                                <button onClick={() => blockIp(v.ip, 'Blocked from analytics')} className="text-xs text-slate-500 hover:text-red-400 px-2 py-1 rounded hover:bg-red-400/10 transition opacity-0 group-hover:opacity-100 whitespace-nowrap">Block IP</button>
+                              )}
+                            </td>
                           </tr>
                         ))}
                       </tbody>
