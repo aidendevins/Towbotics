@@ -164,7 +164,12 @@ function App() {
                 Get Early Access
               </button>
             </div>
-            <span className="md:hidden text-xs text-slate-500">{apiStatus}</span>
+            <button
+              onClick={scrollToReservation}
+              className="md:hidden px-4 py-2 bg-slate-800 text-white text-sm font-semibold rounded-lg hover:bg-slate-700 transition"
+            >
+              Get Early Access
+            </button>
           </div>
         </div>
       </nav>
@@ -176,13 +181,13 @@ function App() {
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-amber-50 border border-amber-200 rounded-full text-amber-900 text-sm font-semibold mb-6">
               Patent-Pending · Georgia Tech Innovation
           </div>
-            <h1 className="text-5xl md:text-7xl font-black text-slate-800 mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-slate-800 mb-6 leading-tight">
               Move. Position. Hitch.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500">
                 Anywhere
               </span>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
               Remotely drive your trailer to the hitch — from anywhere. Permanently mounted so it travels with you everywhere, making hitching solo, safe, and effortless, even in the tightest spaces.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
@@ -644,7 +649,7 @@ function App() {
                       required
                     />
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-slate-700 text-sm font-semibold mb-2">First Name (optional)</label>
                       <input
