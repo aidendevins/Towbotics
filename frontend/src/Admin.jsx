@@ -21,9 +21,23 @@ const ADMIN_PASSWORD = '0612';
 
 const CHART_COLORS = ['#f59e0b', '#06b6d4', '#8b5cf6', '#10b981', '#f43f5e', '#6366f1'];
 
+// Filter out internal/proxy IPs (Railway CGNAT, localhost, private ranges)
+function isInternalIp(ip) {
+  if (!ip || ip === 'unknown') return true;
+  const clean = ip.replace(/^::ffff:/, '');
+  if (clean === '::1' || clean === 'localhost') return true;
+  if (/^127\./.test(clean)) return true;
+  if (/^10\./.test(clean)) return true;
+  if (/^192\.168\./.test(clean)) return true;
+  if (/^172\.(1[6-9]|2\d|3[01])\./.test(clean)) return true;
+  if (/^100\.(6[4-9]|[7-9]\d|1[01]\d|12[0-7])\./.test(clean)) return true; // CGNAT
+  return false;
+}
+
 function useChartData(pageViews, events) {
   return useMemo(() => {
     const viewsByDay = {};
+    const uniqueByDay = {};
     const eventsByDay = {};
     const pathCounts = {};
     const eventTypeCounts = {};
@@ -34,7 +48,11 @@ function useChartData(pageViews, events) {
       const day = v.timestamp ? v.timestamp.slice(0, 10) : '';
       viewsByDay[day] = (viewsByDay[day] || 0) + 1;
       pathCounts[v.path || '/'] = (pathCounts[v.path || '/'] || 0) + 1;
-      if (v.ip && v.ip !== 'unknown') uniqueIpsViews.add(v.ip);
+      if (!isInternalIp(v.ip)) {
+        uniqueIpsViews.add(v.ip);
+        if (!uniqueByDay[day]) uniqueByDay[day] = new Set();
+        uniqueByDay[day].add(v.ip);
+      }
     });
 
     events.forEach((e) => {
@@ -42,12 +60,16 @@ function useChartData(pageViews, events) {
       eventsByDay[day] = (eventsByDay[day] || 0) + 1;
       const name = e.eventName || 'other';
       eventTypeCounts[name] = (eventTypeCounts[name] || 0) + 1;
-      if (e.ip && e.ip !== 'unknown') uniqueIpsEvents.add(e.ip);
+      if (!isInternalIp(e.ip)) uniqueIpsEvents.add(e.ip);
     });
 
     const viewsTimeSeries = Object.entries(viewsByDay)
       .sort(([a], [b]) => a.localeCompare(b))
       .map(([date, count]) => ({ date, views: count, fullDate: date }));
+
+    const uniqueByDaySeries = Object.entries(uniqueByDay)
+      .sort(([a], [b]) => a.localeCompare(b))
+      .map(([date, ips]) => ({ date, unique: ips.size }));
 
     const eventsTimeSeries = Object.entries(eventsByDay)
       .sort(([a], [b]) => a.localeCompare(b))
@@ -66,6 +88,7 @@ function useChartData(pageViews, events) {
 
     return {
       viewsTimeSeries,
+      uniqueByDaySeries,
       eventsTimeSeries,
       topPaths,
       eventTypePie,
@@ -85,8 +108,20 @@ export default function Admin() {
   const [loading, setLoading] = useState(false);
   const [showTables, setShowTables] = useState(false);
   const [activeTab, setActiveTab] = useState('analytics');
+  const [locationFilter, setLocationFilter] = useState('');
 
-  const chartData = useChartData(pageViews, events);
+  const filteredViews = useMemo(() => {
+    let views = pageViews.filter(v => !isInternalIp(v.ip));
+    if (locationFilter) {
+      views = views.filter(v => {
+        const loc = v.city && v.country ? `${v.city}, ${v.country}` : v.country || '';
+        return loc === locationFilter;
+      });
+    }
+    return views;
+  }, [pageViews, locationFilter]);
+
+  const chartData = useChartData(filteredViews, events);
 
   useEffect(() => {
     if (sessionStorage.getItem('adminAuth') === 'true') {
@@ -177,8 +212,9 @@ export default function Admin() {
     );
   }
 
-  const conversionRate = pageViews.length > 0
-    ? ((events.length / pageViews.length) * 100).toFixed(1)
+  const publicViews = pageViews.filter(v => !isInternalIp(v.ip));
+  const conversionRate = publicViews.length > 0
+    ? Math.min(((events.length / publicViews.length) * 100), 100).toFixed(1)
     : '0';
 
   return (
@@ -324,23 +360,23 @@ export default function Admin() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
             <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Page views</p>
-            <p className="text-2xl font-bold mt-1 text-white">{pageViews.length}</p>
-            <p className="text-slate-500 text-xs mt-1">Total visits</p>
+            <p className="text-2xl font-bold mt-1 text-white">{publicViews.length}</p>
+            <p className="text-slate-500 text-xs mt-1">Real visitors only</p>
           </div>
           <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
-            <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Reserve clicks</p>
+            <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Get in touch clicks</p>
             <p className="text-2xl font-bold mt-1 text-amber-400">{events.length}</p>
-            <p className="text-slate-500 text-xs mt-1">Pay / reserve attempts</p>
+            <p className="text-slate-500 text-xs mt-1">Form opened</p>
           </div>
           <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
             <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Unique visitors</p>
             <p className="text-2xl font-bold mt-1 text-cyan-400">{chartData.uniqueViews}</p>
-            <p className="text-slate-500 text-xs mt-1">By IP (page views)</p>
+            <p className="text-slate-500 text-xs mt-1">By IP, public only</p>
           </div>
           <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
-            <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Conversion</p>
+            <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Get in touch rate</p>
             <p className="text-2xl font-bold mt-1 text-emerald-400">{conversionRate}%</p>
-            <p className="text-slate-500 text-xs mt-1">Reserve / views</p>
+            <p className="text-slate-500 text-xs mt-1">Clicks / page views</p>
           </div>
         </div>
 
@@ -374,7 +410,7 @@ export default function Admin() {
             )}
           </div>
           <div className="bg-slate-800/50 rounded-xl border border-slate-700/50 p-5">
-            <h2 className="text-sm font-semibold text-slate-300 mb-4">Reserve / pay clicks over time</h2>
+            <h2 className="text-sm font-semibold text-slate-300 mb-4">Get in touch clicks over time</h2>
             {chartData.eventsTimeSeries.length === 0 ? (
               <p className="text-slate-500 text-sm h-[220px] flex items-center justify-center">No data yet</p>
             ) : (
@@ -393,6 +429,35 @@ export default function Admin() {
               </ResponsiveContainer>
             )}
           </div>
+        </div>
+
+        {/* Unique visitors by day */}
+        <div className="bg-slate-800/50 rounded-xl border border-slate-700/50 p-5 mb-8">
+          <h2 className="text-sm font-semibold text-slate-300 mb-4">Unique visitors by day</h2>
+          {chartData.uniqueByDaySeries.length === 0 ? (
+            <p className="text-slate-500 text-sm h-[180px] flex items-center justify-center">No data yet</p>
+          ) : (
+            <ResponsiveContainer width="100%" height={180}>
+              <AreaChart data={chartData.uniqueByDaySeries} margin={{ top: 5, right: 10, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="uniqueGradient" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#06b6d4" stopOpacity={0.4} />
+                    <stop offset="100%" stopColor="#06b6d4" stopOpacity={0} />
+                  </linearGradient>
+                </defs>
+                <CartesianGrid strokeDasharray="3 3" stroke="#334155" />
+                <XAxis dataKey="date" tick={{ fill: '#94a3b8', fontSize: 11 }} stroke="#475569" />
+                <YAxis tick={{ fill: '#94a3b8', fontSize: 11 }} stroke="#475569" allowDecimals={false} />
+                <Tooltip
+                  contentStyle={{ backgroundColor: '#1e293b', border: '1px solid #475569', borderRadius: '8px' }}
+                  labelStyle={{ color: '#cbd5e1' }}
+                  formatter={(value) => [value, 'Unique visitors']}
+                  labelFormatter={(label) => `Date: ${label}`}
+                />
+                <Area type="monotone" dataKey="unique" stroke="#06b6d4" fill="url(#uniqueGradient)" strokeWidth={2} />
+              </AreaChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         {/* Charts row 2 */}
@@ -459,7 +524,7 @@ export default function Admin() {
         {/* Visitor Locations */}
         {(() => {
           const locationCounts = {};
-          pageViews.forEach((v) => {
+          pageViews.filter(v => !isInternalIp(v.ip)).forEach((v) => {
             if (v.country) {
               const key = v.city ? `${v.city}, ${v.country}` : v.country;
               locationCounts[key] = (locationCounts[key] || 0) + 1;
@@ -472,21 +537,50 @@ export default function Admin() {
 
           return topLocations.length > 0 ? (
             <div className="bg-slate-800/50 rounded-xl border border-slate-700/50 p-5 mb-8">
-              <h2 className="text-sm font-semibold text-slate-300 mb-4">Visitor locations</h2>
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-semibold text-slate-300">Visitor locations</h2>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={locationFilter}
+                    onChange={(e) => setLocationFilter(e.target.value)}
+                    className="text-xs bg-slate-700 border border-slate-600 text-slate-300 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-amber-500"
+                  >
+                    <option value="">All locations</option>
+                    {topLocations.map(({ location }) => (
+                      <option key={location} value={location}>{location}</option>
+                    ))}
+                  </select>
+                  {locationFilter && (
+                    <button
+                      onClick={() => setLocationFilter('')}
+                      className="text-xs text-slate-400 hover:text-white transition"
+                    >
+                      Clear
+                    </button>
+                  )}
+                </div>
+              </div>
               <div className="space-y-2">
                 {topLocations.map(({ location, count }, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <span className="text-slate-400 text-sm w-48 truncate">{location}</span>
+                  <button
+                    key={i}
+                    onClick={() => setLocationFilter(locationFilter === location ? '' : location)}
+                    className={`w-full flex items-center gap-3 rounded-lg px-2 py-1 transition ${locationFilter === location ? 'bg-amber-500/10 ring-1 ring-amber-500/30' : 'hover:bg-slate-700/30'}`}
+                  >
+                    <span className="text-slate-400 text-sm w-48 truncate text-left">{location}</span>
                     <div className="flex-1 bg-slate-700/50 rounded-full h-2 overflow-hidden">
                       <div
-                        className="h-2 rounded-full bg-amber-500"
+                        className={`h-2 rounded-full transition-all ${locationFilter === location ? 'bg-amber-400' : 'bg-amber-500'}`}
                         style={{ width: `${(count / topLocations[0].count) * 100}%` }}
                       />
                     </div>
                     <span className="text-slate-300 text-sm font-medium w-8 text-right">{count}</span>
-                  </div>
+                  </button>
                 ))}
               </div>
+              {locationFilter && (
+                <p className="text-xs text-amber-400 mt-3">Filtering all charts by: <strong>{locationFilter}</strong></p>
+              )}
             </div>
           ) : null;
         })()}
@@ -540,7 +634,7 @@ export default function Admin() {
                 </div>
               </section>
               <section className="p-4">
-                <h3 className="text-sm font-medium text-slate-400 mb-3">Events (reserve / pay clicks)</h3>
+                <h3 className="text-sm font-medium text-slate-400 mb-3">Events (get in touch clicks)</h3>
                 <div className="overflow-x-auto rounded-lg border border-slate-700/50">
                   {events.length === 0 ? (
                     <p className="p-4 text-slate-500 text-sm">No events recorded yet.</p>
