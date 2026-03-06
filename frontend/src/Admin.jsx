@@ -236,6 +236,23 @@ export default function Admin() {
                 {loading ? 'Loading…' : 'Refresh'}
               </button>
               <button
+                onClick={() => {
+                  if (!confirm('Delete all internal/test IP rows from analytics? Real visitor data will be kept.')) return;
+                  fetch(`${API_URL}/admin/analytics/test-data`, {
+                    method: 'DELETE',
+                    headers: { Authorization: 'Bearer 0612' },
+                  })
+                    .then(r => r.json())
+                    .then(d => {
+                      alert(`Cleared ${d.deleted?.pageViews ?? 0} page views and ${d.deleted?.events ?? 0} events.`);
+                      refreshData();
+                    });
+                }}
+                className="px-4 py-2 bg-slate-700 hover:bg-red-900/60 hover:text-red-300 rounded-lg text-sm font-medium transition"
+              >
+                Clear test data
+              </button>
+              <button
                 onClick={handleLogout}
                 className="px-4 py-2 bg-slate-700 hover:bg-slate-600 rounded-lg text-sm font-medium transition"
               >

@@ -161,6 +161,32 @@ router.post('/reservation', async (req, res) => {
   });
 });
 
+// Admin: clear internal/test data from analytics
+router.delete('/admin/analytics/test-data', async (req, res) => {
+  const auth = req.headers.authorization;
+  if (auth !== 'Bearer 0612') return res.status(401).json({ error: 'Unauthorized' });
+
+  // Patterns matching Railway CGNAT, localhost, and private ranges
+  const internalPatterns = [
+    '::1', '127.%', '10.%', '192.168.%',
+    '::ffff:127.%', '::ffff:10.%', '::ffff:192.168.%',
+    '::ffff:100.6%', '::ffff:100.7%', '::ffff:100.8%',
+    '::ffff:100.9%', '::ffff:100.10%', '::ffff:100.11%', '::ffff:100.12%',
+    '100.6%', '100.7%', '100.8%', '100.9%', '100.10%', '100.11%', '100.12%',
+  ];
+
+  const whereClauses = internalPatterns.map((_, i) => `ip LIKE $${i + 1}`).join(' OR ');
+
+  try {
+    const viewsResult = await pool.query(`DELETE FROM page_views WHERE ${whereClauses}`, internalPatterns);
+    const eventsResult = await pool.query(`DELETE FROM events WHERE ${whereClauses}`, internalPatterns);
+    res.json({ deleted: { pageViews: viewsResult.rowCount, events: eventsResult.rowCount } });
+  } catch (err) {
+    console.error('Error clearing test data:', err);
+    res.status(500).json({ error: 'Failed to clear test data' });
+  }
+});
+
 // Admin: get all contacts
 router.get('/admin/contacts', async (req, res) => {
   const auth = req.headers.authorization;
