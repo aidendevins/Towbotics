@@ -55,10 +55,15 @@ function useChartData(pageViews, events) {
       }
     });
 
+    const EVENT_LABELS = {
+      click_reserve: 'Get in touch',
+    };
+
     events.forEach((e) => {
       const day = e.timestamp ? e.timestamp.slice(0, 10) : '';
       eventsByDay[day] = (eventsByDay[day] || 0) + 1;
-      const name = e.eventName || 'other';
+      const raw = e.eventName || 'other';
+      const name = EVENT_LABELS[raw] || raw;
       eventTypeCounts[name] = (eventTypeCounts[name] || 0) + 1;
       if (!isInternalIp(e.ip)) uniqueIpsEvents.add(e.ip);
     });
@@ -139,7 +144,8 @@ export default function Admin() {
     return views;
   }, [pageViews, locationFilter, blockedIpSet]);
 
-  const chartData = useChartData(filteredViews, events);
+  const filteredEvents = useMemo(() => events.filter(e => !blockedIpSet.has(e.ip)), [events, blockedIpSet]);
+  const chartData = useChartData(filteredViews, filteredEvents);
 
   useEffect(() => {
     if (sessionStorage.getItem('adminAuth') === 'true') {
@@ -238,7 +244,7 @@ export default function Admin() {
 
   const publicViews = pageViews.filter(v => !isInternalIp(v.ip) && !blockedIpSet.has(v.ip));
   const conversionRate = publicViews.length > 0
-    ? Math.min(((events.length / publicViews.length) * 100), 100).toFixed(1)
+    ? Math.min(((filteredEvents.length / publicViews.length) * 100), 100).toFixed(1)
     : '0';
 
   return (
@@ -406,7 +412,7 @@ export default function Admin() {
           </div>
           <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
             <p className="text-slate-400 text-xs font-medium uppercase tracking-wider">Get in touch clicks</p>
-            <p className="text-2xl font-bold mt-1 text-amber-400">{events.length}</p>
+            <p className="text-2xl font-bold mt-1 text-amber-400">{filteredEvents.length}</p>
             <p className="text-slate-500 text-xs mt-1">Form opened</p>
           </div>
           <div className="bg-slate-800/80 rounded-xl border border-slate-700/50 p-5">
@@ -544,8 +550,6 @@ export default function Admin() {
                     paddingAngle={2}
                     dataKey="value"
                     nameKey="name"
-                    label={({ name, value }) => `${name}: ${value}`}
-                    labelLine={{ stroke: '#64748b' }}
                   >
                     {chartData.eventTypePie.map((entry, i) => (
                       <Cell key={i} fill={entry.fill} stroke="#1e293b" strokeWidth={1} />
