@@ -684,7 +684,8 @@ function App() {
                     {isSubmitting ? 'Sending...' : 'Get in touch'}
                   </button>
                   <p className="text-slate-500 text-xs text-center">
-                    We'll reach out with next steps. No payment required.
+                    We'll reach out with next steps. No payment required. By submitting, you agree to our{' '}
+                    <a href="/privacy" className="underline hover:text-slate-600 transition">Privacy Policy</a>.
                   </p>
                 </form>
           </div>
@@ -754,8 +755,8 @@ function App() {
               © 2026 TowBotics. All rights reserved.
             </p>
             <div className="flex gap-4 mt-4 md:mt-0">
-              <a href="#" className="text-slate-500 hover:text-amber-500 text-sm transition">Privacy</a>
-              <a href="#" className="text-slate-500 hover:text-amber-500 text-sm transition">Terms</a>
+              <a href="/privacy" className="text-slate-500 hover:text-amber-500 text-sm transition">Privacy Policy</a>
+              <a href={`mailto:hello@towbotic.com`} className="text-slate-500 hover:text-amber-500 text-sm transition">Contact</a>
             </div>
           </div>
         </div>

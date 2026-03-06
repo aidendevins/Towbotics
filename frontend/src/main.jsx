@@ -2,10 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import Admin from './Admin';
+import Privacy from './Privacy';
 
 function Root() {
-  const isAdmin = typeof window !== 'undefined' && window.location.pathname === '/admin';
-  return isAdmin ? <Admin /> : <App />;
+  const path = typeof window !== 'undefined' ? window.location.pathname : '/';
+  if (path === '/admin') return <Admin />;
+  if (path === '/privacy') return <Privacy />;
+  return <App />;
 }
 
 ReactDOM.createRoot(document.getElementById('root')).render(
