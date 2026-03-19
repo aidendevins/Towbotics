@@ -39,7 +39,7 @@ function App() {
     {
       src: '/towbot-front.png',
       title: 'The Towbot — Production Model',
-      description: 'This is the product you\'ll receive. Starting at $5,000. Shipping second half of 2026 — get in touch to reserve your spot.',
+      description: 'This is the product you\'ll receive. Starting at $7,000. Shipping second half of 2026 — get in touch to reserve your spot.',
       bg: '#000000',
       textDark: false,
     },
@@ -185,8 +185,8 @@ function App() {
               Move. Position. Hitch.<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-600 to-amber-500">
                 Anywhere
-              </span>
-            </h1>
+            </span>
+          </h1>
             <p className="text-lg md:text-2xl text-slate-600 mb-10 max-w-3xl mx-auto leading-relaxed">
               Remotely drive your trailer to the hitch — from anywhere. Permanently mounted so it travels with you everywhere, making hitching solo, safe, and effortless, even in the tightest spaces.
             </p>
@@ -273,7 +273,7 @@ function App() {
             <p className="text-xl text-slate-600 max-w-3xl mx-auto">
               Manual hitching is physically demanding, time-consuming, and dangerous. For some RV owners, it's often the reason they stop traveling—or sell their trailer entirely.
             </p>
-          </div>
+        </div>
 
           <div className="grid md:grid-cols-3 gap-8 mb-16">
             <PainPointCard
@@ -290,8 +290,8 @@ function App() {
               image="/towbot-terrain.png"
               title="Works Anywhere You Park"
               description="Tight campground, crowded parking lot, narrow driveway — it doesn't matter. Permanently mounted to your trailer, it goes wherever you do and handles any space."
-            />
-          </div>
+          />
+        </div>
 
         </div>
       </section>
@@ -355,7 +355,7 @@ function App() {
                         className="max-w-full max-h-full object-contain"
                       />
                     </div>
-                  </div>
+              </div>
                 ))}
               </div>
 
@@ -582,7 +582,7 @@ function App() {
               <div className="text-white">
                 <p className="text-slate-300 text-sm font-semibold mb-2">STARTING AT</p>
                 <h3 className="text-5xl md:text-6xl font-black mb-4">
-                  $5,000
+                  $7,000
                 </h3>
                 <p className="text-slate-300 mb-6">
                   Final price depends on your configuration and installation options. Reserve now to lock in early pricing.
